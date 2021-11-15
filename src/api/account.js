@@ -1,6 +1,6 @@
 const axios = require("axios").default
-const url = "http://localhost:4000/"
-// const url = "https://home-seller-back.herokuapp.com/"
+// const url = "http://localhost:4000/"
+const url = "https://home-seller-back.herokuapp.com/"
 // const { useContext } = require("react")
 // const { UserContext } = require("./userContext")
 
