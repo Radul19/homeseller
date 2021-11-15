@@ -4,7 +4,7 @@ import Card from "../components/card"
 import "../../styles/sliderBar.css"
 import { useContext, useEffect, useState } from "react"
 import { useParams } from "react-router"
-import { getAll } from "../../api/account"
+import getAll from "../../api/account"
 import { UserContext } from "../../api/userContext"
 
 const Filter = (props) => {

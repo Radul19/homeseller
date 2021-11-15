@@ -10,7 +10,7 @@ import pay from "../../images/pay.png"
 
 import { useContext, useEffect, useRef, useState } from "react";
 import { useHistory, useParams } from "react-router";
-import { getItem } from "../../api/account";
+import getItem from "../../api/account";
 import { UserContext } from "../../api/userContext";
 import { loadOut } from "../components/loadScreen";
 import { useHandleErr } from '../../api/useHandleErr'

@@ -17,7 +17,7 @@ import 'swiper/swiper.min.css'
 import SwiperCore, {
     Pagination, Navigation
 } from 'swiper';
-import { getAll } from "../../api/account"
+import getAll from "../../api/account"
 
 // install Swiper modules
 SwiperCore.use([Pagination, Navigation]);
@@ -99,7 +99,7 @@ const SearchPage = () => {
             }
 
         })()
-        
+
         return () => {
             
         }

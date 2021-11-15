@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useContext } from "react/cjs/react.development"
-import { getAll } from "../../api/account"
+import getAll from "../../api/account"
 import { UserContext } from "../../api/userContext"
 import "../../styles/sliderBar.css"
 import Card from "./card"

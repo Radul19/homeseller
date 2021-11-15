@@ -4,8 +4,6 @@ const url = "https://home-seller-back.herokuapp.com/"
 // const { useContext } = require("react")
 // const { UserContext } = require("./userContext")
 
-const api = {}
-
 const catchError = async (err) => {
     if (err.response) {
         console.log(err.response)
@@ -19,7 +17,7 @@ const catchError = async (err) => {
     }
 }
 
-api.loginUser = async (data) => {
+const loginUser = async (data) => {
     let response
     const { email, password } = data
     await axios.get(`${url}login/${email}/${password}`)
@@ -33,7 +31,7 @@ api.loginUser = async (data) => {
 
 }
 
-api.register = async (item, type) => {
+const register = async (item, type) => {
     const { username, email, password, confirmPassword } = item
     let response
     await axios.post(`${url}register`, {
@@ -51,7 +49,7 @@ api.register = async (item, type) => {
     return response
 }
 
-api.getUser = async (id) => {
+const getUser = async (id) => {
     let response
     await axios.get(`${url}user/${id}`)
         .then(res => {
@@ -64,7 +62,7 @@ api.getUser = async (id) => {
     return response
 }
 
-api.editData = async (data, type) => {
+const editData = async (data, type) => {
     let response
     await axios.post(`${url}edit`, { data, type })
         .then(res => {
@@ -76,7 +74,7 @@ api.editData = async (data, type) => {
     return response
 }
 
-api.createItem = async (dataOriginal, files) => {
+const createItem = async (dataOriginal, files) => {
     const data = { ...dataOriginal }
     let response
     const formData = new FormData()
@@ -84,6 +82,7 @@ api.createItem = async (dataOriginal, files) => {
     ///Delete Url of each map to put in aux
     data.images.map((item, index) => {
         delete data.images[index].url
+        return 0
     })
     /// Stringify aux to append FormData
     const aux = JSON.stringify(data.images)
@@ -109,7 +108,7 @@ api.createItem = async (dataOriginal, files) => {
 }
 
 
-api.getItem = async (id) => {
+const getItem = async (id) => {
     let response
     await axios.get(`${url}getItem/${id}`)
         .then(res => {
@@ -122,7 +121,7 @@ api.getItem = async (id) => {
 }
 
 
-api.getAll = async () => {
+const getAll = async () => {
     let response
     await axios.get(`${url}getAllItems`)
         .then(res => {
@@ -133,5 +132,8 @@ api.getAll = async () => {
         })
     return response
 }
+let api
 
-module.exports = api
+export default api = {
+    getAll,getItem,createItem,editData,getUser,register,loginUser
+}
