@@ -15,7 +15,6 @@ import { UserContext } from "../../api/userContext";
 import { loadOut } from "../components/loadScreen";
 import { useHandleErr } from '../../api/useHandleErr'
 
-
 //////   BIG IMAGE ////////////////////////////////////////////////////////
 const BigImage = (props) => {
     return (
@@ -24,7 +23,6 @@ const BigImage = (props) => {
 }
 //////   ITEM PAGE ////////////////////////////////////////////////////////
 const ItemPage = () => {
-
     const { handleError } = useHandleErr()
 
     ////Componentes ////////////////////////////////////////////////////////////////////////////////////////////////
