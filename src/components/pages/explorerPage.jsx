@@ -4,7 +4,7 @@ import Card from "../components/card"
 import "../../styles/sliderBar.css"
 import { useContext, useEffect, useState } from "react"
 import { useParams } from "react-router"
-import getAll from "../../api/account"
+import api from "../../api/account"
 import { UserContext } from "../../api/userContext"
 
 const Filter = (props) => {
@@ -42,7 +42,7 @@ const ExplorerPage = () => {
     useEffect(() => {
 
         (async () => {
-            const res = await getAll()
+            const res = await api.getAll()
             if (res.status == 200) {
                 setCardData(res.data.items)
             } else {

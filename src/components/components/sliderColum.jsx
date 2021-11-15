@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useContext } from "react/cjs/react.development"
-import getAll from "../../api/account"
+import api from "../../api/account"
 import { UserContext } from "../../api/userContext"
 import "../../styles/sliderBar.css"
 import Card from "./card"
@@ -13,7 +13,7 @@ const SliderColum = () => {
 
     useEffect(() => {
         (async()=>{
-            const res = await getAll()
+            const res = await api.getAll()
             let arr = []
             let i = 0
             

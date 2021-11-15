@@ -10,7 +10,7 @@ import pay from "../../images/pay.png"
 
 import { useContext, useEffect, useRef, useState } from "react";
 import { useHistory, useParams } from "react-router";
-import getItem from "../../api/account";
+import api from "../../api/account";
 import { UserContext } from "../../api/userContext";
 import { loadOut } from "../components/loadScreen";
 import { useHandleErr } from '../../api/useHandleErr'
@@ -97,7 +97,7 @@ const ItemPage = () => {
 
     useEffect(() => {
         (async () => {
-            const res = await getItem(id)
+            const res = await api.getItem(id)
             if (res.status === 200) {
                 setDataContainer(res.data.item)
                 setShow("http://" + res.data.item.images[0].url)

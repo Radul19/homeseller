@@ -17,7 +17,7 @@ import 'swiper/swiper.min.css'
 import SwiperCore, {
     Pagination, Navigation
 } from 'swiper';
-import getAll from "../../api/account"
+import api from "../../api/account"
 
 // install Swiper modules
 SwiperCore.use([Pagination, Navigation]);
@@ -78,7 +78,7 @@ const SearchPage = () => {
     useEffect(() => {
         
         (async()=>{
-            const res = await getAll()
+            const res = await api.getAll()
             let arr = []
             let i = 0
             

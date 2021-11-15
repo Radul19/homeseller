@@ -2,8 +2,7 @@ import '../../styles/MainPage.css'
 import mainBackground from '../../images/imageMain.png'
 import logo from '../../images/LogoWhite.png'
 import { useContext, useState } from 'react'
-import register from '../../api/account'
-import loginUser from '../../api/account'
+import api from '../../api/account'
 import { useHistory } from 'react-router-dom'
 // import LoadScreen from '../components/loadScreen'
 import { UserContext } from '../../api/userContext'
@@ -77,7 +76,7 @@ const MainPage = () => {
     /*///////////////////////////////////////////*/
     const handleRegisterReturn = async () => {
         setLoad(true)
-        const res = await register(registerInputs, type)
+        const res = await api.register(registerInputs, type)
         if (res.status === 200) {
             loadOut(setFade, setLoad, history, "/search")
             setUser({
@@ -96,7 +95,7 @@ const MainPage = () => {
 
     const handleLoginReturn = async () => {
         setLoad(true)
-        const res = await loginUser(loginInputs)
+        const res = await api.loginUser(loginInputs)
         console.log(res);
         if (res.status === 200) {
             console.log("good");

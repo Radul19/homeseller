@@ -5,7 +5,7 @@ import plusCube from "../../images/PlusCube.png"
 
 import { useContext, useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router";
-import createItem from "../../api/account";
+import api from "../../api/account";
 import { UserContext } from "../../api/userContext";
 import { loadOut } from "../components/loadScreen";
 import { useHandleErr } from '../../api/useHandleErr'
@@ -139,7 +139,7 @@ const ItemPageNew = () => {
 
     const createClick = async () => {
         setLoad(true)
-        const res = await createItem(dataContainer, files)
+        const res = await api.createItem(dataContainer, files)
         console.log(res);
         if (res.status === 200) {
             loadOut(setFade, setLoad, history, `/itemPage/${res.data.id}`)

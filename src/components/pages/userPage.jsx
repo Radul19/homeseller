@@ -6,9 +6,7 @@ import profileIcon from "../../images/profile-icon.jpg"
 import SliderColum from "../components/sliderColum"
 import { UserContext } from "../../api/userContext"
 import { useContext, useEffect, useState } from "react"
-import editData from "../../api/account"
-import getAll from "../../api/account"
-import getUser from "../../api/account"
+import api from "../../api/account"
 import Card from "../components/card"
 import { useHandleErr } from "../../api/useHandleErr"
 
@@ -50,7 +48,7 @@ const UserPage = () => {
     })
     const handleEdit = (name, value) => setUserData({ ...userData, [name]: value });
     const handleEditFetch = async () => {
-        const res = await editData(data, user.type)
+        const res = await api.editData(data, user.type)
         if (res.status === 200) {
             setEdit(false)
             setPrevData(data)
@@ -66,13 +64,13 @@ const UserPage = () => {
     useEffect(() => {
         (async () => {
             console.log(id)
-            const res = await getUser(id)
+            const res = await api.getUser(id)
             if (res.status === 200) {
                 console.log(res.data);
                 setUserData(res.data)
                 setPrevData(res.data)
                 //////////////////////////
-                const res2 = await getAll()
+                const res2 = await api.getAll()
                 let arr = []
                 let i = 0
 

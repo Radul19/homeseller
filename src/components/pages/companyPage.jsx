@@ -6,8 +6,7 @@ import "../../styles/companyPage.css"
 import SliderColum from "../components/sliderColum"
 import { UserContext } from "../../api/userContext"
 import { useContext, useEffect, useState } from "react"
-import getUser  from "../../api/account"
-import editData from "../../api/account"
+import api  from "../../api/account"
 import { useHandleErr } from "../../api/useHandleErr"
 
 import { linkClick } from "../components/loadScreen"
@@ -82,7 +81,7 @@ const CompanyPage = () => {
 
     useEffect(() => {
         (async () => {
-            const res = await getUser(id)
+            const res = await api.getUser(id)
             if (res.status === 200) {
                 setData(res.data)
                 setPrevData(res.data)
@@ -96,7 +95,7 @@ const CompanyPage = () => {
     const handleEdit = (name, value) => setData({ ...data, [name]: value });
 
     const handleEditFetch = async () => {
-        const res = await editData(data, user.type)
+        const res = await api.editData(data, user.type)
         if (res.status === 200) {
             setPrevData(data)
             setEdit(false)
