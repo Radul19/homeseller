@@ -10,7 +10,7 @@ import pay from "../../images/pay.png"
 
 import { useContext, useEffect, useRef, useState } from "react";
 import { useHistory, useParams } from "react-router";
-import { createItem, getItem } from "../../api/account";
+import { getItem } from "../../api/account";
 import { UserContext } from "../../api/userContext";
 import { loadOut } from "../components/loadScreen";
 import { useHandleErr } from '../../api/useHandleErr'
@@ -93,22 +93,6 @@ const ItemPage = () => {
         setDataContainer({ ...dataContainer })
     }
 
-    // useEffect(() => {
-    //     console.log("Data Update");
-    //     return () => {
-    //     }
-    // }, [dataContainer])
-
-    const createClick = async () => {
-        setLoad(true)
-        const res = await createItem(dataContainer, files)
-        console.log(res);
-        if (res.status === 200) {
-            loadOut(setFade, setLoad, history, `/itemPage/${res.data.id}`)
-        } else {
-            handleError(res)
-        }
-    }
 
 
     useEffect(() => {
