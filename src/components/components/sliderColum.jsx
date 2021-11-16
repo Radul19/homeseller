@@ -28,10 +28,10 @@ const SliderColum = () => {
                 setData(arr)
             } else {
                 console.log(res.result);
-                setMsg({
-                    text: "No se ha podido realizar la busqueda",
-                    color: "red"
-                })
+                // setMsg({
+                //     text: "No se ha podido realizar la busqueda",
+                //     color: "red"
+                // })
             }
 
         })()

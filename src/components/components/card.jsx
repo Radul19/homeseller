@@ -16,7 +16,7 @@ const Card = ({item}) => {
 
     return (
         <div className="card" onClick={sendToItem}  >
-            <img className="_picture" src={item ? "http://" + item.images[0].url : null} alt="" />
+            <img className="_picture" src={item ? item.images[0].url : null} alt="" />
             <div className="_content">
                 <div className="_details">
                     <p className="_price" >{item ? item.price +"$" : "0$"}</p>

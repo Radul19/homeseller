@@ -1,12 +1,11 @@
 import Header from "../components/header"
 // import profileIcon from "../../images/profile-icon.jpg"
-import img2 from "../../images/house2.jpg"
-import img1 from "../../images/house1.jpg"
+import img1 from "../../images/profile-icon.jpg"
 import "../../styles/companyPage.css"
 import SliderColum from "../components/sliderColum"
 import { UserContext } from "../../api/userContext"
 import { useContext, useEffect, useState } from "react"
-import api  from "../../api/account"
+import api from "../../api/account"
 import { useHandleErr } from "../../api/useHandleErr"
 
 import { linkClick } from "../components/loadScreen"
@@ -18,10 +17,16 @@ import { useHistory, useParams } from "react-router"
 
 const ItemDisplay = ({ item }) => {
 
+    const { setFade, setLoad } = useContext(UserContext)
+    const history = useHistory()
+
+    const click = () => {
+        linkClick(setFade, setLoad, history, `/itemPage/${item.id}`)
+    }
 
     return (
-        <div className="_item-display" >
-            <img className="_item-img" src={"http://" + item.images[0].url} alt="" />
+        <div className="_item-display" onClick={click} >
+            <img className="_item-img" src={item.images[0].url} alt="" />
             <div className="_data">
                 <div className="_title-price">
                     <p className="_title">{item.title}</p>

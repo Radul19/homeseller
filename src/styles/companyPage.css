@@ -143,12 +143,16 @@
 }
 
 .companyPage ._general-container ._content-container ._left ._item-display {
+  cursor: pointer;
   display: flex;
   /* background-color: crimson; */
   margin-bottom: 7.5vh;
   height: 30vh;
+  transition: margin-left .1s ease-in-out;
 }
-
+.companyPage ._general-container ._content-container ._left ._item-display:hover{
+  margin-left: 10px;
+}  
 .companyPage
   ._general-container
   ._content-container

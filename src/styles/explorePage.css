@@ -35,10 +35,14 @@
 }
 
 .explorePage ._contentContainer ._result .card{
+  cursor: pointer;
   width: 75%;
   font-size: .9em;
+  transition: transform .1s ease-in-out;
 }
-
+.explorePage ._contentContainer ._result .card:hover{
+  transform: scale(1.03);
+}
 .filter {
   width: 80%;
   color: #191919ad;

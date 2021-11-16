@@ -5,14 +5,11 @@ import Comment from "../components/comment"
 import TextareaAutosize from "react-textarea-autosize";
 
 import Banner from "../../images/Banner1.png"
-import plusCube from "../../images/PlusCube.png"
 import pay from "../../images/pay.png"
 
-import { useContext, useEffect, useRef, useState } from "react";
-import { useHistory, useParams } from "react-router";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router";
 import api from "../../api/account";
-import { UserContext } from "../../api/userContext";
-import { loadOut } from "../components/loadScreen";
 import { useHandleErr } from '../../api/useHandleErr'
 
 //////   BIG IMAGE ////////////////////////////////////////////////////////
@@ -38,25 +35,8 @@ const ItemPage = () => {
         )
     }
 
-    const { id } = useParams()
-
-    const { user, setLoad, setFade, setMsg } = useContext(UserContext)
-    const history = useHistory()
-
-
-
-
-    //////////  /////////  //////////  //////////  //      //
-    ///         ///           ///      //      //   //   //
-    ////STATES                                                                  /////////   /////////     ///      //      //     //
-    const [files, setFiles] = useState([])                                      ///               ///     ///      //      //     //
-    const [imgTitleInput, setImgTitleInput] = useState("")                      /////////   ////////      ///      //////////     //
-
-    const [dtdCount, setDtdCount] = useState(0)                               /////   /////   /////////  /////   /////   /////////  //////////
-    const [miniImgArray, setMiniImgArray] = useState([])                      /// // // ///   //     //  /// // // ///   //     //  //      //
-    const [isId, setIsId] = useState(true)                                    ///  //   ///   /////////  ///  //   ///   /////////  //      //
-    const [imgDtdArray, setImgDtdArray] = useState([])                        ///       ///   //     //  ///       ///   //     //  //      //
-    const [dataContainer, setDataContainer] = useState({                      ///       ///   //     //  ///       ///   //     //  //////////
+    const { id } = useParams()             
+    const [dataContainer, setDataContainer] = useState({       
         title: "a",
         price: "b",
         images: [{
@@ -73,34 +53,13 @@ const ItemPage = () => {
     const [show, setShow] = useState(dataContainer.images[imgIndex].url)
 
 
-    const handleData = (name, value) => { setDataContainer({ ...dataContainer, [name]: value }) }
-
-
-    const deleteCurrentImage = () => {
-        if (imgIndex !== -1) {
-            dataContainer.images.splice(imgIndex, 1)
-            miniImgArray.splice(imgIndex, 1)
-            if (imgIndex !== 0) {
-                setShow(dataContainer.images[imgIndex - 1].url)
-            } else if (imgIndex === 0) {
-                setShow("")
-            }
-            setImgIndex(imgIndex - 1)
-            // console.log(dataContainer.images[imgIndex]);
-        }
-    }
-    const forceUpdate = () => {
-        setDataContainer({ ...dataContainer })
-    }
-
-
 
     useEffect(() => {
         (async () => {
             const res = await api.getItem(id)
             if (res.status === 200) {
                 setDataContainer(res.data.item)
-                setShow("http://" + res.data.item.images[0].url)
+                setShow(res.data.item.images[0].url)
                 console.log(res);
             } else {
                 handleError(res)
@@ -132,7 +91,7 @@ const ItemPage = () => {
                         <div className="_images-container">
                             <div className="_images-preview">
                                 {dataContainer.images.map((value, index) => {
-                                    return <MiniImage key={index} index={index} url={"http://" + value.url} />
+                                    return <MiniImage key={index} index={index} url={value.url} />
                                 })}
                             </div>
                             <div className="_image-display">
