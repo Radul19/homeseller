@@ -4,7 +4,7 @@ import "../../styles/ItemPageCinema.css"
 import Comment from "../components/comment"
 import pay from "../../images/pay.png"
 import Card from "../components/card"
-import img1 from "../../images/house2.jpg"
+// import img1 from "../../images/house2.jpg"
 
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -25,7 +25,7 @@ export const ItemPageCinema = () => {
             <div className="_cinema-ctn" >
                 <div className="_blank"></div>
                 <div className="_img-ctn">
-                    <img src={img1} alt="" className="_img" />
+                    {/* <img src={img1} alt="" className="_img" /> */}
                 </div>
                 <div className="_details">
                     <h2>Cocina</h2>

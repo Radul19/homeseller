@@ -1,13 +1,13 @@
 import React from 'react'
 import "../../styles/itemPageModa.css"
 import Header from "../components/header"
-import img1 from "../../images/house1.jpg"
-import img2 from "../../images/house2.jpg"
-import img3 from "../../images/house3.jpg"
-import img4 from "../../images/house4.jpg"
-import img5 from "../../images/house5.jpg"
-import img6 from "../../images/house6.jpg"
-import img7 from "../../images/house1.jpg"
+// import img1 from "../../images/house1.jpg"
+// import img2 from "../../images/house2.jpg"
+// import img3 from "../../images/house3.jpg"
+// import img4 from "../../images/house4.jpg"
+// import img5 from "../../images/house5.jpg"
+// import img6 from "../../images/house6.jpg"
+// import img7 from "../../images/house1.jpg"
 import Comment from "../components/comment"
 import pay from "../../images/pay.png"
 import Card from "../components/card"
@@ -29,7 +29,7 @@ export const ItemPageModal = () => {
         <div className="itemPageModal">
             <Header />
             <main className="_main-info-ctn">
-                <img src={img2} className="_img" alt="" />
+                {/* <img src={img2} className="_img" alt="" /> */}
                 <div className="_general-details">
                     <h2>Caracteristicas Generales</h2>
                     <ul>
@@ -44,7 +44,7 @@ export const ItemPageModal = () => {
             </main>
             <section className="_general-ctn">
                 <div className="_grid-display">
-                    <img src={img1} className="_modal" alt="" />
+                    {/* <img src={img1} className="_modal" alt="" />
                     <img src={img3} className="_modal" alt="" />
                     <img src={img4} className="_modal" alt="" />
                     <img src={img5} className="_modal" alt="" />
@@ -52,7 +52,7 @@ export const ItemPageModal = () => {
                     <img src={img7} className="_modal" alt="" />
                     <img src={img3} className="_modal" alt="" />
                     <img src={img6} className="_modal" alt="" />
-                    <img src={img7} className="_modal" alt="" />
+                    <img src={img7} className="_modal" alt="" /> */}
                 </div>
                 <div className="_pay-comments-ctn">
                     <div className="_pay-ctn">
