@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react"
 import { useHistory } from "react-router-dom"
 import { UserContext } from "../api/userContext"
 import api from "../api/account"
-import { linkClick } from "../components/loadScreen"
+import { loadOut } from "../components/loadScreen"
 import { Footer } from "../components/footer"
 import SliderBar from "../components/sliderBar"
 
@@ -23,7 +23,7 @@ const LogOut = ({history}) => {
                 email: "",
                 id: "",
             })
-            linkClick(setFade, setLoad, history, "/")
+            loadOut(setFade, setLoad, history, "/")
         }} >Cerrar Sesión</p>
         )
     }
@@ -33,7 +33,7 @@ const LogOut = ({history}) => {
     /// Regresa a la pantalla de inicio
     const { setFade, setLoad } = useContext(UserContext)
     return (
-        <p className="pointer" onClick={() => { linkClick(setFade, setLoad, history, "/") }} >Iniciar Sesion</p>
+        <p className="pointer" onClick={() => { loadOut(setFade, setLoad, history, "/") }} >Iniciar Sesion</p>
     )
 }
 
@@ -57,7 +57,7 @@ const SearchPage = () => {
     /// La busqueda se realiza en explorePage
     const handleEnter = (e) => {
         if (e.key === "Enter") {
-            linkClick(setFade, setLoad, history, `/explore/${input}`)
+            loadOut(setFade, setLoad, history, `/explore/${input}`)
         }
     }
 
@@ -91,9 +91,9 @@ const SearchPage = () => {
                         <img src={miniLogo} alt="" className="_logo" />
                         <div className="_links">
                             {/* Redirigir a Explore Page */}
-                            <p className="pointer" onClick={() => { linkClick(setFade, setLoad, history, "/explore/ ") }}>Destacados</p>
+                            <p className="pointer" onClick={() => { loadOut(setFade, setLoad, history, "/explore/ ") }}>Destacados</p>
                             {/* Si hay un usuario logeado permite cargar el componente que redirige al perfil, caso contrario, retorna nulo */}
-                            {user.id !== "" ? <p className="pointer" onClick={() => { linkClick(setFade, setLoad, history, `${perfil + user.id}`) }} >Perfil</p> : null}
+                            {user.id !== "" ? <p className="pointer" onClick={() => { loadOut(setFade, setLoad, history, `${perfil + user.id}`) }} >Perfil</p> : null}
                             {/* Si hay un usuario logeado retorna el LogOut para cerrar sesion, caso contrario el Login para ir a la pagina de inicio */}
                             {user.id !== "" ? <LogOut history={history} /> : <LogIn history={history} />}
                         </div>

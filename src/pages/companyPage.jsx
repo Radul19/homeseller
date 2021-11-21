@@ -6,7 +6,7 @@ import { UserContext } from "../api/userContext"
 import { useHandleErr } from "../api/useHandleErr"
 import Header from "../components/header"
 import SliderColum from "../components/sliderColum"
-import { linkClick, loadOut } from "../components/loadScreen"
+import { loadOut } from "../components/loadScreen"
 import { Footer } from "../components/footer"
 
 
@@ -30,12 +30,12 @@ const ItemDisplay = ({ item, posts, index, setPosts }) => {
 
     /// Al hacer click redirige hacia la publicacion
     const click = () => {
-        linkClick(setFade, setLoad, history, `/itemPage/${item.id}`)
+        loadOut(setFade, setLoad, history, `/itemPage/${item.id}`)
     }
 
     ///Aun en desarrollo
     const clickEdit = () => {
-        linkClick(setFade, setLoad, history, `/itemCreate/${item.id}`)
+        loadOut(setFade, setLoad, history, `/itemCreate/${item.id}`)
     }
 
     /// Borrar una publicacion de la BD y de la empresa
@@ -161,13 +161,13 @@ const CompanyPage = () => {
     const goCreateItem = () => {
         switch (newItemType) {
             case 1:
-                linkClick(setFade, setLoad, history, "/itemCreate/new")
+                loadOut(setFade, setLoad, history, "/itemCreate/new")
                 break;
             case 2:
-                linkClick(setFade, setLoad, history, "/itemPage2/new")
+                loadOut(setFade, setLoad, history, "/itemPage2/new")
                 break;
             case 3:
-                linkClick(setFade, setLoad, history, "/itemPage3/new")
+                loadOut(setFade, setLoad, history, "/itemPage3/new")
                 break;
             default:
                 break;

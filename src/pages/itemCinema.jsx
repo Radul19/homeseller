@@ -1,7 +1,8 @@
+///////////// SIN TERMINAR
+
 import "../styles/ItemPageCinema.css"
 import React from 'react'
 import Header from '../components/header'
-import Comment from "../components/comment"
 import pay from "../images/pay.png"
 import Card from "../components/card"
 // import img1 from "../../images/house2.jpg"
@@ -38,9 +39,9 @@ export const ItemPageCinema = () => {
             </div>
             <div className="_comments-pay-ctn">
                 <div className="_comments-ctn">
-                    <Comment />
+                    {/* <Comment />
                     <Comment reply={true} />
-                    <Comment />
+                    <Comment /> */}
                 </div>
                 <div className="_pay-ctn">
                     <h2>Metodos de pago</h2>

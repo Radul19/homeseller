@@ -1,3 +1,4 @@
+///////////// SIN TERMINAR
 import "../styles/itemPageModa.css"
 import React from 'react'
 import Header from "../components/header"
@@ -8,7 +9,6 @@ import Header from "../components/header"
 // import img5 from "../../images/house5.jpg"
 // import img6 from "../../images/house6.jpg"
 // import img7 from "../../images/house1.jpg"
-import Comment from "../components/comment"
 import pay from "../images/pay.png"
 import Card from "../components/card"
 
@@ -53,9 +53,9 @@ export const ItemPageModal = () => {
                         <button className="_btn" >Comprar</button>
                     </div>
                     <div className="_comments-ctn">
-                        <Comment />
+                        {/* <Comment />
                         <Comment reply={true} />
-                        <Comment />
+                        <Comment /> */}
                     </div>
                 </div>
             </section>

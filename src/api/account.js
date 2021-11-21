@@ -202,7 +202,17 @@ const sendComment = async (comment, id) => {
     return response
 }
 
-
+// const search = async (data) => {
+//     let response
+//     await axios.get(`${url}search/${data}`)
+//         .then(res => {
+//             response = res
+//         })
+//         .catch(err => {
+//             response = catchError(err)
+//         })
+//     return response
+// }
 
 /// Le sumamos +1 a la vista de una publicacion cuando la renderizamos
 const plusView = async (id) => {
