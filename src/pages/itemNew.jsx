@@ -12,56 +12,73 @@ import TextareaAutosize from "react-textarea-autosize";
 import plusCube from "../images/PlusCube.png"
 
 
-//////   BIG IMAGE ////////////////////////////////////////////////////////
-const BigImage = (props) => {
-    const click = () => {
-        // props.setImgIndex(props.imgIndex - 1)
-    }
-    return (
-        <img src={props.url} alt="" className="big-image" onClick={click} />
-    )
-}
-//////   ITEM PAGE ////////////////////////////////////////////////////////
+//////  ITEM PAGE New ////////////////////////////////////////////////////////
 const ItemPageNew = () => {
 
     const { handleError } = useHandleErr()
 
     const { id } = useParams()
 
-    ////Componentes ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////Componente interno ////////////////////////////////////////////////////////////////////////////////////////////////
     //////   MINI IMAGE ////////////////////////////////////////////////////////
-
+    /// Recibe como parametros la url de la imagen que se cargará y su propio index
     const MiniImage = ({ url, index }) => {
+        /// UseRef para el input file y poder añadir una imagen nueva
         const inputFile = useRef(null)
+
+        ///Funcion al hacer click en la imagen
         const click = async () => {
+            /* Hay dos casos, si el url de la imagen es "plusCube", significa que es la imagen con signo de "+"
+            usada con el proposito de, al darle click, añadir una nueva imagen
+            En caso contrario es una imagen normal:
+            seleccionamos su index en setImgIndex y setShow para mostrarla en el contenedor grande
+            Esto puede ser muy confuso asi que si tienes dudas me avisas
+            */
             if (url !== plusCube) {
                 setShow(url)
                 setImgIndex(index)
 
+            /// Si se dio click a la imagen con signo de "+", simula un click en el inputFile
             } else {
                 inputFile.current.click();
             }
         }
 
+        /// Una vez que se seleccione la nueva imagen, inputFile ejecutara su funcion "OnChange" y alli podemos
+        /// manejar la nueva imagen
         const inputFileChange = (e) => {
-            console.log("some?");
+
+            /// Verificamos que la imagen se haya seleccionado y no cancelado
             if (e.target.files[0]) {
+
+                /// Guarda los datos de el archivo en una variable
                 let file = e.target.files[0];
+
+                /// FileReader() nos permite leer la imagen que seleccionamos, porque originalmente, no nos da la url exacta
                 let reader = new FileReader();
-                reader.onload = function (event) {
-                    // The file's text will be printed here
+
+                /// Creamos una funcion que se ejecutara cuando leamos un archivo con "reader" ( FileReader() )
+                reader.onload = (event) => {
+                    /// event.target.result me dara la url de la imagen, y eso es lo que estabamos buscando
+                    /// al contenedor de los datos le insertamos un nuevo elemento en las imagenes, con url, sin titulo ni descripciones detalladas
                     dataContainer.images.push({
                         url: event.target.result,
                         title: "",
                         detaildescription: [],
                     })
-                    // files.push(file)
-                    setFiles([...files],file)
+
+                    /// Le añadimos los datos de la imagen al estado Files, para poder enviar todas las imagenes al servidor y subirlas a cloudinary
+                    setFiles([...files], file)
+                    /// Ajustamos el index de la imagen para asi mostrar la nueva que se esta creando
                     setImgIndex(imgIndex + 1)
+                    /// Estado de las ¨Mini Imagenes¨ le añadimos la url de la imagen que seleccionamos y asi poder mostrarla
                     setMiniImgArray([...miniImgArray, event.target.result])
+                    /// Presentamos la nueva imagen en el contenedor grande
                     setShow(event.target.result)
-                    console.log(event.target)
                 };
+
+                /// Leemos el archivo que se selecciono con reader, pero la funcion es
+                // "Read as data url", y asi leemos la ruta original de el archivo y obtenemos su ubicacion en "event.target.result"
                 reader.readAsDataURL(file);
             }
         }
@@ -69,6 +86,7 @@ const ItemPageNew = () => {
         return (
             <>
                 <img src={url} alt="" className="mini-image" onClick={click} />
+                {/* Si la imagen es el signo de "+" , habilita el inputFile, en caso contrario devuelve un valor nulo */}
                 {url === plusCube ?
                     <input type='file' id='file' name="images" ref={inputFile} style={{ display: 'none' }} onChange={(e) => { inputFileChange(e) }} /> : null}
             </>
@@ -76,6 +94,7 @@ const ItemPageNew = () => {
     }
 
 
+    /// Extraemos el contenido 
     const { user, setLoad, setFade, setMsg } = useContext(UserContext)
     const history = useHistory()
 
@@ -200,7 +219,7 @@ const ItemPageNew = () => {
                                     <MiniImage url={plusCube} />
                                 </div>
                                 <div className="_image-display">
-                                    <BigImage url={show} setImgIndex={setImgIndex} />
+                                    <img src={show} alt="" className="big-image" />
                                 </div>
                             </div>
                             <h2 className="_subtitle" >Caracteristicas generales</h2>

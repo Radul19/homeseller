@@ -16,48 +16,52 @@ import Grp1 from "../images/Group 1.png"
 import Grp2 from "../images/Group 2.png"
 import Grp3 from "../images/Group 3.png"
 
+/// Componente para mostrar cada publicacion perteneciente a la empresa
 const ItemDisplay = ({ item, posts, index, setPosts }) => {
+    /// Se obtiene el hook para mostrar los errores
     const { handleError } = useHandleErr()
 
+    /// Se extraen los valores del UserContext
     const { setFade, setLoad, setMsg } = useContext(UserContext)
+
+    /// UseHistory permite hacer un "push" a la navegacion y cambiar de pagina sin hacer click en un <Link> (componente de react router)
+    /// Basicamente, nos permite cambiar las paginas cuando queramos
     const history = useHistory()
 
+    /// Al hacer click redirige hacia la publicacion
     const click = () => {
         linkClick(setFade, setLoad, history, `/itemPage/${item.id}`)
     }
 
+    ///Aun en desarrollo
     const clickEdit = () => {
-        // console.log(posts)
         linkClick(setFade, setLoad, history, `/itemCreate/${item.id}`)
-        // history.replace(`itemCreate/${item.id}`)
-        // history.go(0)
     }
 
+    /// Borrar una publicacion de la BD y de la empresa
     const clickDelete = async () => {
+        /// Iniciar la pantalla de carga
         setLoad(true)
         const res = await api.deleteItem(item)
-        console.log(res)
         if (res.status === 200) {
-            const aux = posts
-            aux.splice(index, 1)
-            setPosts([...aux])
+            ///Se borra el posts en su respectivo indice y luego actualiza el estado, copiandolo de regreso
+            posts.splice(index, 1)
+            setPosts([...posts])
             setMsg({
                 text: "Se ha borrado correctamente la publicacion",
                 color: "green"
             })
+            /// Finaliza la pantalla de carga
             loadOut(setFade, setLoad)
 
         } else {
             handleError(res)
         }
-
-
-
-        // posts.splice(index,1)
     }
 
     return (
         <div className="_item-display" >
+            {/* Muestra la imagen por su url */}
             <img className="_item-img" src={item.images[0].url} onClick={click} alt="" />
             <div className="_data">
                 <div className="_title-price" onClick={click}>
@@ -80,14 +84,23 @@ const ItemDisplay = ({ item, posts, index, setPosts }) => {
 const CompanyPage = () => {
 
     const { handleError } = useHandleErr()
+
+    /// Usar el parametro proveniente de el enlace <Route path="/company/:id" >
+    ///                                                                  here
+    /// Se usara para buscar a la compañia y todas sus publicaciones
     const { id } = useParams()
-
-
-    const [edit, setEdit] = useState(false)
-    const { setFade, setLoad, user, setMsg } = useContext(UserContext)
+    ///UseHistory para cambiar entre paginas
     const history = useHistory()
+    
+    ///Extraems las variables del UserContext
+    const { setFade, setLoad, user, setMsg } = useContext(UserContext)
+    ///Estado para habilitar la edicion de los datos
+    const [edit, setEdit] = useState(false)
+    /// Almacenar en una variable que tipo de display va a tener la publicacion que se va a crear
     const [newItemType, setNewItemType] = useState(0)
+    /// Estado para alternar la ventana modal en la que se selecciona el display del item a crear
     const [createItem, setCreateItem] = useState(false)
+    /// Todos los datos de la compañia
     const [data, setData] = useState({
         name: "",
         id: "",
@@ -95,6 +108,7 @@ const CompanyPage = () => {
         email: "",
         profilepic: "",
     })
+    /// Datos previos de la compañia en caso de que se cancele la edicion
     const [prevData, setPrevData] = useState({
         name: "",
         id: "",
@@ -102,13 +116,18 @@ const CompanyPage = () => {
         email: "",
 
     })
+    /// Estado para almacenar todas las publicaciones de la compañia
     const [posts, setPosts] = useState([""])
 
+
+    /// Use Effect que se ejecutara al cargar el componente 
     useEffect(() => {
+        /// Creamos una funcion asyncrona ¨fantasma¨
         (async () => {
             const res = await api.getUser(id)
             if (res.status === 200) {
                 console.log(res)
+                /// Recibimos los posts y los datos de la compañia, luego los añadimos a los respectivos estados
                 setPosts(res.data.posts)
                 setData(res.data)
                 setPrevData(res.data)
@@ -119,8 +138,10 @@ const CompanyPage = () => {
         // eslint-disable-next-line
     }, [])
 
+    /// Funcion para actualizar los valores provenientes de los inputs de Editar
     const handleEdit = (name, value) => setData({ ...data, [name]: value });
 
+    /// Si se confirma la edicion, hacemos un fetch al servidor para actualizarlos
     const handleEditFetch = async () => {
         const res = await api.editData(data, user.type)
         if (res.status === 200) {
@@ -135,6 +156,8 @@ const CompanyPage = () => {
         }
     }
 
+    /// Una vez seleccionado y aceptado el tipo de display que tendra la nueva publicacion
+    /// se enviará a la pagina que corresponda
     const goCreateItem = () => {
         switch (newItemType) {
             case 1:
@@ -150,17 +173,25 @@ const CompanyPage = () => {
                 break;
         }
     }
+    ///UseRef para referir el inputFile de la imagen de perfil
     const inputFile = useRef(null)
+
+    /// Cuando se le da click al div de la imagen de perfil, simula el click en el inputFile y abre el explorador de archivos
+    /// para seleccionar la imagen que se quiere subir
     const profileClick = () => {
         console.log(data)
         inputFile.current.click()
     }
+    /// Cuando se seleccione la imagen, se aplica el atributo ¨OnChange¨ del input file y se dispara la siguiente funcion
     const inputFileChange = async (e) => {
-        console.log("some?");
+        ///Se guardan los datos de el archivo
         let file = e.target.files[0];
+        /// Si se guardo correctamente y no se canselo la seleccion
         if (file) {
+            ///Guarda los datos en la BD y sube la imagen a cloudinary
             const res = await api.updateProfilePic(file, data.id)
             if (res.status === 200) {
+                /// Una vez recibido los datos, copia todo el contenido de el estado ¨Data¨ , pero actualiza el url de la imagen (profilepic)
                 setData({ ...data, profilepic: res.data.url })
                 setMsg({
                     text: "Imagen de perfil actualizada corrrectamente",
@@ -174,6 +205,7 @@ const CompanyPage = () => {
 
     return (
         <div className="companyPage">
+            {/* Condicional donde, si el estado de CreateItem es true, mustra el modal para seleccionar el display que tendra la nueva publicacion */}
             {createItem ?
                 <div className="blackScreen2">
                     <div className="_modal">
@@ -199,19 +231,22 @@ const CompanyPage = () => {
                     </div>
                 </div>
                 : null}
+            {/* Contenido normal */}
             <Header />
             <main className="_general-container">
                 <div className="_company-info-container">
                     <div className="_img-div">
                         <div className="_black-div" onClick={profileClick} >
+                            {/* Si hay una foto de perfil presentala, si no la hay, presenta la imagen de usuario predeterminada */}
                             {data.profilepic === "" ?
                                 <img src={img1} alt="" className="_profile-picture"  />
                                 : <img src={data.profilepic} alt="" className="_profile-picture" />}
-                            {/* <img src={data.profilepic === "" ? img1 : data.profilepic} alt="" className="_profile-picture"  onClick={profileClick} /> */}
+                            {/* Input file fantasma al que se le hace referencia para el click  */}
                             <input type='file' id='file' name="images" ref={inputFile} style={{ display: 'none' }} onChange={(e) => { inputFileChange(e) }} />
                         </div>
                     </div>
                     <div className="_info-div">
+                        {/* Condicional, si se van a editar los datos, oculta los "p" y presenta los "input" */}
                         {!edit ? (
                             <>
                                 <p className="_company-name" >{data.name}</p>
@@ -238,9 +273,12 @@ const CompanyPage = () => {
                         <div style={{ width: "100%", display: "flex" }} >
                             <h2 style={{ width: "50%", }} className="_subtitle" >Inmobiliarios en Venta</h2>
                             <div className="_btn-ctn" >
+                                {/* Boton para el display de la ventana modal que mostrara los tipos de publicaciones q se pueden crear */}
                                 <button onClick={() => { setCreateItem(true) }}  >Anadir</button>
                             </div>
                         </div>
+                        {/* Condicional donde, mientras la primera publicacion no este vacia, muestra todo su contenido,
+                        recorriendo el array y retornando un componente */}
                         {posts[0] !== "" ?
                             posts.map((item, index) => {
                                 return <ItemDisplay item={item} key={index} setPosts={setPosts} posts={posts} index={index} />
@@ -248,6 +286,7 @@ const CompanyPage = () => {
                     </div>
                     <div className="_right">
                         <h2 className="_subtitle"  >Otros</h2>
+                        {/* Componente para una columna lateral */}
                         <SliderColum />
                     </div>
                 </div>
