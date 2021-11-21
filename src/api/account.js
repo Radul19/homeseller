@@ -203,6 +203,7 @@ const sendComment = async (comment, id) => {
 }
 
 
+
 /// Le sumamos +1 a la vista de una publicacion cuando la renderizamos
 const plusView = async (id) => {
     let response
