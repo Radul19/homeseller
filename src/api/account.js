@@ -31,8 +31,8 @@ const loginUser = async (data) => {
 
 }
 
-const register = async (item, type) => {
-    const { username, email, password, confirmPassword } = item
+const register = async (item) => {
+    const { username, email, password, confirmPassword,type } = item
     let response
     await axios.post(`${url}register`, {
         username,

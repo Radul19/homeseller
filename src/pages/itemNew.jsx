@@ -329,12 +329,12 @@ const InputDetail = ({ dataContainer, index, imgIndex, text }) => {
     }, [dataContainer.images[imgIndex].detaildescription])
 
     return (
-        <div className="_input-dtd" key={id} >
+        <div className="_input-dtd" key={index} >
             {/* El input es un textareaAutosize, esto es muy comodo para el diseño */}
             <TextareaAutosize onChange={(e) => {
                 /// Cada vez que se escriba en el, añade el valor al DataContainer, sin embargo no hace falta que se actualice, porque ya el textarea
                 /// muestra el valor que se esta escribiendo
-                dataContainer.images[imgIndex].detaildescription[id] = e.target.value
+                dataContainer.images[imgIndex].detaildescription[index] = e.target.value
 
                 /// Actualiza el estado con los valores que se escriben
                 setInput(e.target.value)

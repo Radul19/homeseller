@@ -1,83 +1,61 @@
 import '../styles/MainPage.css'
-import mainBackground from '../images/imageMain.png'
-import logo from '../images/LogoWhite.png'
+import { useHistory } from 'react-router-dom'
 import { useContext, useState } from 'react'
 import api from '../api/account'
-import { useHistory } from 'react-router-dom'
-// import LoadScreen from '../components/loadScreen'
-import { UserContext } from '../api/userContext'
-
-
-
-
-
-import { linkClick, loadOut } from '../components/loadScreen'
 import { useHandleErr } from '../api/useHandleErr'
+import { UserContext } from '../api/userContext'
+import { linkClick, loadOut } from '../components/loadScreen'
+
+
+import logo from '../images/LogoWhite.png'
+import mainBackground from '../images/imageMain.png'
 
 const MainPage = () => {
 
+    /// Estado para los inputs del login
     const [loginInputs, setLoginInputs] = useState({
         email: "",
         password: "",
     })
+    /// Estado para los inputs del register
     const [registerInputs, setRegisterInputs] = useState({
         email: "",
         password: "",
         confirmPasword: "",
         username: "",
+        type: true
     })
-    const [type, setType] = useState(true)
+
+    /// Se extrae el contenido del UserContext
     const { setUser, setLoad, setFade, setMsg } = useContext(UserContext)
     const { handleError } = useHandleErr()
 
-
+    /// Use history para navegar entre paginas
     const history = useHistory()
-    /////////////////////////////////////////////////////// Styles
-    const [loginRight, setloginRight] = useState("-40vw")
-    const [registerLeft, setRegisterLeft] = useState("-40vw")
-    const [mainContainerLeft, setMainContainerLeft] = useState("0vw")
-    const [blackScreenOpacity, setBlackScreenOpacity] = useState("0")
-    const [opacity, setOpacity] = useState("1")
 
+    /// Funciones para llenar los estados de loginInput y registerInput
     const handleLogin = (name, value) => setLoginInputs({ ...loginInputs, [name]: value });
     const handleRegister = (name, value) => setRegisterInputs({ ...registerInputs, [name]: value });
 
     const toggleType = () => {
-        setType(!type)
+        setRegisterInputs({...registerInputs, type : !registerInputs.type})
     }
 
-    const blackScreenClick = () => {
-        if (loginRight === "0vw") {
-            setloginRight("-40vw")
-        }
-        if (registerLeft === "0vw") {
-            setRegisterLeft("-40vw")
-        }
-        setMainContainerLeft("0vw")
-        setBlackScreenOpacity("0")
-        setOpacity("1")
-    }
 
-    const showHide = (type) => {
-        if (type === "login") {
-            setloginRight("0vw")
-            setMainContainerLeft("-100vw")
-            setBlackScreenOpacity("1")
-        } else if (type === "register") {
-            setRegisterLeft("0vw")
-            setMainContainerLeft("100vw")
-            setBlackScreenOpacity("1")
-        }
-        setOpacity("0")
-    }
 
     /*///////////////////////////////////////////*/
     /*HANDLE CLICKS RETURN*/
     /*///////////////////////////////////////////*/
+
+    /// Register Fetch
     const handleRegisterReturn = async () => {
+        /// Iniciamos la pantalla de carga
         setLoad(true)
-        const res = await api.register(registerInputs, type)
+        /// Hacemos la peticion para insertar los datos
+        const res = await api.register(registerInputs)
         if (res.status === 200) {
+            /// Si todo salio bien, termina la pantalla de carga y redirigeme a /search
+            /// Ademas, al estado user (App.js) dale los valores del usuario, username,id,type (Aqui se hace uso del useContext)
             loadOut(setFade, setLoad, history, "/search")
             setUser({
                 user: res.data.username,
@@ -93,12 +71,14 @@ const MainPage = () => {
         }
     }
 
+    /// Login Fetch
     const handleLoginReturn = async () => {
+        /// Inicia pantalla de carga
         setLoad(true)
+        /// Peticion al servidor con los datos
         const res = await api.loginUser(loginInputs)
-        console.log(res);
         if (res.status === 200) {
-            console.log("good");
+            /// Si todo sale bien , redirecciona a /serach y añade los datos del usuario al estado user (App.js)
             loadOut(setFade, setLoad, history, "/search")
             setUser({
                 user: res.data.username,
@@ -110,8 +90,48 @@ const MainPage = () => {
         }
 
     }
+    /// Styles ///////////////////////////////////////////////////////////////
+
+    /// Estado para el margen derecho del login
+    const [loginRight, setloginRight] = useState("-40vw")
+    /// Estado para el margen izquierdo del register
+    const [registerLeft, setRegisterLeft] = useState("-40vw")
+    /// Estado para el margen izquierdo del contenedor principal
+    const [mainContainerLeft, setMainContainerLeft] = useState("0vw")
+    /// Opacidad de el contenedor principal
+    const [opacity, setOpacity] = useState("1")
+    /// Opacidad de la pantalla negra
+    const [blackScreenOpacity, setBlackScreenOpacity] = useState("0")
+
+    /// Funcion para ocultar el login o register y devolver el contenedor principal a margin-left : 0
+    const blackScreenClick = () => {
+        if (loginRight === "0vw") {
+            setloginRight("-40vw")
+        }
+        if (registerLeft === "0vw") {
+            setRegisterLeft("-40vw")
+        }
+        setMainContainerLeft("0vw")
+        setBlackScreenOpacity("0")
+        setOpacity("1")
+    }
+    
+    /// Funcion para mostrar el login o el register y ocultar el contenedor principal
+    const showHide = (type) => {
+        if (type === "login") {
+            setloginRight("0vw")
+            setMainContainerLeft("-100vw")
+            setBlackScreenOpacity("1")
+        } else if (type === "register") {
+            setRegisterLeft("0vw")
+            setMainContainerLeft("100vw")
+            setBlackScreenOpacity("1")
+        }
+        setOpacity("0")
+    }
 
 
+    /// Se usan los estilos en linea porque asi podemos usar react para alterar sus datos en tiempo real
     const styles = {
         registerAside: {
             left: registerLeft
@@ -130,6 +150,7 @@ const MainPage = () => {
 
     return (
         <div className="generalContainer" >
+            {/* Black Screen */}
             <img src={mainBackground} alt="" className="mainBackground" />
             <div className="blackScreen" style={styles.blackScreen} onClick={blackScreenClick} ></div>
             {/*REGISTER ASIDE*/}
@@ -139,46 +160,43 @@ const MainPage = () => {
                     <p className="_subtitle" >Seleccione su tipo de cuenta</p>
                     <div className="check-ctn">
                         <label className="_user-ctn">
-                            <input checked={type} onChange={toggleType} type="checkbox" name="user" id="1" />
+                            <input checked={registerInputs.type} onChange={(toggleType)} type="checkbox" name="user" id="1" />
                             Comprador
                         </label>
                         <label className="_company-ctn">
-                            <input checked={!type} onChange={toggleType} type="checkbox" name="user" id="2" />
+                            <input checked={!registerInputs.type} onChange={toggleType} type="checkbox" name="user" id="2" />
                             Compañía
                         </label>
                     </div>
                     <label htmlFor="Username">{
-                        type ? "Nombre de usuario" : "Nombre de la Compania"
+                        /// Dependiendo si cambia registerInputs.type a true o false, cambia el texto a mostrar
+                        registerInputs.type ? "Nombre de usuario" : "Nombre de la Compania"
                     }</label>
-                    <input className="_input" autoComplete="off" onChange={(e) => {
-                        handleRegister("username", e.target.value)
-                    }} type="text" name="username" />
+                    {/* Inputs con sus funciones de handleRegister y los valores correspondientes */}
+                    <input className="_input" autoComplete="off" onChange={(e) => {handleRegister("username", e.target.value)}} type="text" name="username" />
                     <label htmlFor="Username">Email</label>
-                    <input className="_input" autoComplete="off" onChange={(e) => {
-                        handleRegister("email", e.target.value)
-                    }} type="text" name="email" />
+                    <input className="_input" autoComplete="off" onChange={(e) => {handleRegister("email", e.target.value)}} type="text" name="email" />
                     <label htmlFor="Password"  >Contraseña</label>
-                    <input className="_input" autoComplete="off" onChange={(e) => {
-                        handleRegister("password", e.target.value)
-                    }} type="text" name="password" />
+                    <input className="_input" autoComplete="off" onChange={(e) => {handleRegister("password", e.target.value)}} type="text" name="password" />
                     <label htmlFor="Password"  >Confirmar contraseña</label>
-                    <input className="_input" autoComplete="off" onChange={(e) => {
-                        handleRegister("confirmPassword", e.target.value)
-                    }} type="text" name="password" />
+                    <input className="_input" autoComplete="off" onChange={(e) => {handleRegister("confirmPassword", e.target.value)}} type="text" name="password" />
+                    {/* Boton con la funcion para enviar los datos */}
                     <button type="button" onClick={handleRegisterReturn} >Crear cuenta</button>
                 </form>
             </aside>
-            {/*HERO PAGE*/}
+            {/*MAIN CONTAINER*/}
             <main className="mainContainer" style={styles.mainContainer} >
                 <div className="itemsContainer" >
                     <img src={logo} alt="imagen" className="logoWhite" />
                     <p className="firstText">No necesitas construir tu futuro cuando puedes comprarlo!!</p>
                     <p className="secondText">Echa un vistazo a nuestro amplio catalogo de casas y departamentos</p>
                     <div className="btnContainer" >
+                        {/* Botones para mostrar u ocultar el login y el register */}
                         <button className="btnMain" onClick={() => { showHide("register") }} >Registrarse</button>
                         <button className="btnMain" onClick={() => { showHide("login") }}>Iniciar Sesión</button>
                     </div>
                     <div className="thirdTextContainer" >
+                        {/* Texto con el OnClick para ir a la pagina de busqueda como invitado, sin iniciar sesion */}
                         <p onClick={() => { linkClick(setFade, setLoad, history, "/search") }} className="thirdText" >Continuar como invitado</p>
 
                     </div>
@@ -189,9 +207,11 @@ const MainPage = () => {
                 <p className="loginSubtitle" >Iniciar Sesión</p>
                 <form action="#">
                     <label htmlFor="email">Email</label>
+                    {/* Inputs con sus funciones de handleLogin y los valores correspondientes */}
                     <input className="_input" autoComplete="off" onChange={(e) => { handleLogin("email", e.target.value) }} type="text" value={loginInputs.email} name="email" />
                     <label htmlFor="password"  >Contraseña</label>
-                    <input className="_input"  autoComplete="off" onChange={(e) => { handleLogin("password", e.target.value) }} type="password" name="password" />
+                    <input className="_input" autoComplete="off" onChange={(e) => { handleLogin("password", e.target.value) }} type="password" name="password" />
+                    {/* Boton con la funcion para enviar los datos */}
                     <button type="button" onClick={handleLoginReturn} >Ingresar</button>
                 </form>
             </aside>
