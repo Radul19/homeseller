@@ -192,7 +192,6 @@
 }
 
 .companyPage ._general-container ._content-container ._left ._item-display {
-  /* cursor: pointer; */
   display: flex;
   /* background-color: crimson; */
   margin-bottom: 7.5vh;
