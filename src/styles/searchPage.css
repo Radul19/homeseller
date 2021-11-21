@@ -4,6 +4,7 @@
 }
 .searchPage{
     /* height: 200vh; */
+    min-height: 100vh;
     overflow-x: hidden;
     /* background-color: #191919; */
 }
@@ -82,9 +83,10 @@
 }
 
 .topContent ._searchContainer ._sugestText{
-    font-size: 0.9em;
-    text-align: center;
-    text-shadow: 1px 4px 4px #191919;
+    font-size: 1em;
+    text-align: left;
+    margin-left: 2em;
+    text-shadow: 2px 2px 2px #191919;
 }
 
 ::-webkit-input-placeholder {

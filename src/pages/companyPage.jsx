@@ -1,60 +1,80 @@
-import Header from "../components/header"
-// import profileIcon from "../../images/profile-icon.jpg"
-import img1 from "../../images/profile-icon.jpg"
-import "../../styles/companyPage.css"
-import SliderColum from "../components/sliderColum"
-import { UserContext } from "../../api/userContext"
-import { useContext, useEffect, useState } from "react"
-import api from "../../api/account"
-import { useHandleErr } from "../../api/useHandleErr"
-
-import { linkClick } from "../components/loadScreen"
-
-import Grp1 from "../../images/Group 1.png"
-import Grp2 from "../../images/Group 2.png"
-import Grp3 from "../../images/Group 3.png"
+import "../styles/companyPage.css"
+import { useContext, useEffect, useRef, useState } from "react"
 import { useHistory, useParams } from "react-router"
+import api from "../api/account"
+import { UserContext } from "../api/userContext"
+import { useHandleErr } from "../api/useHandleErr"
+import Header from "../components/header"
+import SliderColum from "../components/sliderColum"
+import { linkClick, loadOut } from "../components/loadScreen"
+import { Footer } from "../components/footer"
 
-const ItemDisplay = ({ item }) => {
 
-    const { setFade, setLoad } = useContext(UserContext)
+
+import img1 from "../images/profile-icon.jpg"
+import Grp1 from "../images/Group 1.png"
+import Grp2 from "../images/Group 2.png"
+import Grp3 from "../images/Group 3.png"
+
+const ItemDisplay = ({ item, posts, index, setPosts }) => {
+    const { handleError } = useHandleErr()
+
+    const { setFade, setLoad, setMsg } = useContext(UserContext)
     const history = useHistory()
 
     const click = () => {
         linkClick(setFade, setLoad, history, `/itemPage/${item.id}`)
     }
 
+    const clickEdit = () => {
+        // console.log(posts)
+        linkClick(setFade, setLoad, history, `/itemCreate/${item.id}`)
+        // history.replace(`itemCreate/${item.id}`)
+        // history.go(0)
+    }
+
+    const clickDelete = async () => {
+        setLoad(true)
+        const res = await api.deleteItem(item)
+        console.log(res)
+        if (res.status === 200) {
+            const aux = posts
+            aux.splice(index, 1)
+            setPosts([...aux])
+            setMsg({
+                text: "Se ha borrado correctamente la publicacion",
+                color: "green"
+            })
+            loadOut(setFade, setLoad)
+
+        } else {
+            handleError(res)
+        }
+
+
+
+        // posts.splice(index,1)
+    }
+
     return (
-        <div className="_item-display" onClick={click} >
-            <img className="_item-img" src={item.images[0].url} alt="" />
+        <div className="_item-display" >
+            <img className="_item-img" src={item.images[0].url} onClick={click} alt="" />
             <div className="_data">
-                <div className="_title-price">
-                    <p className="_title">{item.title}</p>
+                <div className="_title-price" onClick={click}>
+                    <p className="_title"  >{item.title}</p>
                     <p className="_price">{item.price + "$"}</p>
                 </div>
                 <div className="_dtd">
                     <p>{item.generaldescription}</p>
                 </div>
+                <div className="_btns-ctn">
+                    <button onClick={clickEdit} >Editar</button>
+                    <button onClick={clickDelete} >Eliminar</button>
+                </div>
             </div>
         </div>
     )
 }
-
-// const ItemModal = () => {
-//     return (
-//         <div className="_itemModal">
-//             <label htmlFor=""></label>
-//             <input type="text" />
-//             <label htmlFor=""></label>
-//             <input type="text" />
-//             <label htmlFor=""></label>
-//             <input type="text" />
-//             <label htmlFor=""></label>
-//             <input type="text" />
-//         </div>
-//     )
-// }
-
 
 
 const CompanyPage = () => {
@@ -73,30 +93,32 @@ const CompanyPage = () => {
         id: "",
         description: "",
         email: "",
-        posts: []
+        profilepic: "",
     })
     const [prevData, setPrevData] = useState({
         name: "",
         id: "",
         description: "",
         email: "",
-        posts: []
+
     })
-    const [array, setArray] = useState([])
+    const [posts, setPosts] = useState([""])
 
     useEffect(() => {
         (async () => {
             const res = await api.getUser(id)
             if (res.status === 200) {
+                console.log(res)
+                setPosts(res.data.posts)
                 setData(res.data)
                 setPrevData(res.data)
             } else {
                 handleError(res)
             }
         })()
+        // eslint-disable-next-line
     }, [])
 
-    const arrayX = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
     const handleEdit = (name, value) => setData({ ...data, [name]: value });
 
     const handleEditFetch = async () => {
@@ -116,7 +138,7 @@ const CompanyPage = () => {
     const goCreateItem = () => {
         switch (newItemType) {
             case 1:
-                linkClick(setFade, setLoad, history, "/itemCreate")
+                linkClick(setFade, setLoad, history, "/itemCreate/new")
                 break;
             case 2:
                 linkClick(setFade, setLoad, history, "/itemPage2/new")
@@ -128,16 +150,27 @@ const CompanyPage = () => {
                 break;
         }
     }
+    const inputFile = useRef(null)
+    const profileClick = () => {
+        console.log(data)
+        inputFile.current.click()
+    }
+    const inputFileChange = async (e) => {
+        console.log("some?");
+        let file = e.target.files[0];
+        if (file) {
+            const res = await api.updateProfilePic(file, data.id)
+            if (res.status === 200) {
+                setData({ ...data, profilepic: res.data.url })
+                setMsg({
+                    text: "Imagen de perfil actualizada corrrectamente",
+                    color: "green"
+                })
+            }
+        }
+    }
 
-    // const forceLoad=()=>{
-    //     setData(data)
-    //     setArray(array)
-    //     console.log(data);
-    //     console.log(array);
-    //     array.map(()=>{
-    //         console.log("wtf");
-    //     })
-    // }
+
 
     return (
         <div className="companyPage">
@@ -146,7 +179,7 @@ const CompanyPage = () => {
                     <div className="_modal">
                         <h3>Seleccione un tipo de presentacion</h3>
                         <div className="_img-ctn">
-                            <div className={newItemType === 1 ? "_selected" : null} onClick={() => { setNewItemType(1) }} >
+                            <div className={newItemType === 1 ? "_selected" : null} onClick={() => { setNewItemType(1) }}  >
                                 <img src={Grp1} alt="" />
                                 <p>Tradicional</p>
                             </div>
@@ -160,8 +193,8 @@ const CompanyPage = () => {
                             </div>
                         </div>
                         <div className="_btn-ctn">
-                            <button style={{ backgroundColor: "#ca3f3f" }} onClick={() => { setCreateItem(false) }} >Cancelar</button>
-                            <button style={{ backgroundColor: "#66bb70" }} onClick={goCreateItem} >Aceptar</button>
+                            <button className="_cancel" onClick={() => { setCreateItem(false) }} >Cancelar</button>
+                            <button className="_accept" onClick={goCreateItem} >Aceptar</button>
                         </div>
                     </div>
                 </div>
@@ -170,7 +203,13 @@ const CompanyPage = () => {
             <main className="_general-container">
                 <div className="_company-info-container">
                     <div className="_img-div">
-                        <img src={img1} alt="" className="_profile-picture" />
+                        <div className="_black-div" onClick={profileClick} >
+                            {data.profilepic === "" ?
+                                <img src={img1} alt="" className="_profile-picture"  />
+                                : <img src={data.profilepic} alt="" className="_profile-picture" />}
+                            {/* <img src={data.profilepic === "" ? img1 : data.profilepic} alt="" className="_profile-picture"  onClick={profileClick} /> */}
+                            <input type='file' id='file' name="images" ref={inputFile} style={{ display: 'none' }} onChange={(e) => { inputFileChange(e) }} />
+                        </div>
                     </div>
                     <div className="_info-div">
                         {!edit ? (
@@ -199,21 +238,21 @@ const CompanyPage = () => {
                         <div style={{ width: "100%", display: "flex" }} >
                             <h2 style={{ width: "50%", }} className="_subtitle" >Inmobiliarios en Venta</h2>
                             <div className="_btn-ctn" >
-                                <button style={{ backgroundColor: "#7bd185", color: "#006d0d" }} onClick={() => { setCreateItem(true) }}  >Anadir</button>
-                                <button style={{ backgroundColor: "#d17b7b", color: "#880000" }} >Eliminar</button>
-                                <button style={{ backgroundColor: "#f9cf93", color: "#744300" }} >Editar</button>
+                                <button onClick={() => { setCreateItem(true) }}  >Anadir</button>
                             </div>
                         </div>
-                        {data.posts.map((item, index) => {
-                            return <ItemDisplay item={item} key={index} />
-                        })}
+                        {posts[0] !== "" ?
+                            posts.map((item, index) => {
+                                return <ItemDisplay item={item} key={index} setPosts={setPosts} posts={posts} index={index} />
+                            }) : null}
                     </div>
                     <div className="_right">
-                        <h2 className="_subtitle" >Otros</h2>
+                        <h2 className="_subtitle"  >Otros</h2>
                         <SliderColum />
                     </div>
                 </div>
             </main>
+            <Footer />
         </div>
     )
 }

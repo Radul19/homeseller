@@ -1,7 +1,10 @@
 .explorePage {
+  position: relative;
   width: 100%;
-  height: 100vh;
+  /* height: 100vh; */
+  min-height: 100vh;
   overflow-x: hidden;
+  /* position: absolute; */
 }
 
 .explorePage ._contentContainer {
@@ -38,10 +41,10 @@
   cursor: pointer;
   width: 75%;
   font-size: .9em;
-  transition: transform .1s ease-in-out;
+  transition: transform .2s ease-in-out;
 }
 .explorePage ._contentContainer ._result .card:hover{
-  transform: scale(1.03);
+  transform: scale(1.05);
 }
 .filter {
   width: 80%;

@@ -1,7 +1,7 @@
 import { useContext, useState } from "react"
 import { useHistory } from "react-router-dom"
-import { UserContext } from "../../api/userContext"
-import miniLogo from "../../images/MiniLogo.png"
+import { UserContext } from "../api/userContext"
+import miniLogo from "../images/MiniLogo.png"
 import { linkClick } from "./loadScreen"
 
 const Header = () => {

@@ -1,6 +1,6 @@
 import { useContext } from "react"
-import { UserContext } from "../../api/userContext"
-import gif from "../../images/load.gif"
+import { UserContext } from "../api/userContext"
+import gif from "../images/load.gif"
 const LoadScreen = () => {
 
     const { fade } = useContext(UserContext)
@@ -57,14 +57,25 @@ const LoadScreen = () => {
 }
 
 export const loadOut = (setFade, setLoad, history, direction) => {
-    setTimeout(() => {
-        history.push(direction)
-        setFade("out")
-    }, 200);
-    setTimeout(() => {
-        setLoad(false)
-        setFade("in")
-    }, 700);
+    if (history === undefined && direction === undefined) {
+        setTimeout(() => {  
+            setFade("out")
+        }, 200);
+        setTimeout(() => {
+            setLoad(false)
+            setFade("in")
+        }, 700);
+        
+    } else {
+        setTimeout(() => {
+            history.push(direction)
+            setFade("out")
+        }, 200);
+        setTimeout(() => {
+            setLoad(false)
+            setFade("in")
+        }, 700);
+    }
 }
 
 export const linkClick = (setFade, setLoad, history, direction) => {

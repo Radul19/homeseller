@@ -1,7 +1,7 @@
 .userPage {
   /* background-color: #191919; */
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 .userPage ._general-container {

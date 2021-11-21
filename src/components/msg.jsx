@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useContext } from 'react/cjs/react.development'
-import { UserContext } from '../../api/userContext'
+import { UserContext } from '../api/userContext'
 
 export const Msg = () => {
 

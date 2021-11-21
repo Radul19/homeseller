@@ -1,5 +1,5 @@
 import { useState } from "react"
-import "../../styles/sliderBar.css"
+import "../styles/sliderBar.css"
 import Card from "./card"
 
 const MiniSlideBar = (props) => {

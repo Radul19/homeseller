@@ -1,6 +1,6 @@
 const axios = require("axios").default
-// const url = "http://localhost:4000/"
-const url = "https://home-seller-back.herokuapp.com/"
+const url = "http://localhost:4000/"
+// const url = "https://home-seller-back.herokuapp.com/"
 // const { useContext } = require("react")
 // const { UserContext } = require("./userContext")
 
@@ -85,8 +85,8 @@ const createItem = async (dataOriginal, files) => {
         return 0
     })
     /// Stringify aux to append FormData
-    const aux = JSON.stringify(data.images)
-    formData.append("aux", aux)
+    const copyData = JSON.stringify(data.images)
+    formData.append("copyData", copyData)
     /// Delete iamges
     delete data.images
     ///Append Data
@@ -132,8 +132,73 @@ const getAll = async () => {
         })
     return response
 }
+
+const deleteItem = async (item) => {
+    let response
+    await axios.post(`${url}deleteItem`, item)
+        .then(res => {
+            response = res
+        })
+        .catch(err => {
+            response = catchError(err)
+        })
+    return response
+}
+
+const updateProfilePic = async (data, id) => {
+    console.log(data)
+    const formData = new FormData()
+    formData.append("image", data)
+    formData.append("id", id)
+    let response
+    await axios.post(`${url}updateProfilePic`, formData)
+        .then(res => {
+            response = res
+        })
+        .catch(err => {
+            response = catchError(err)
+        })
+    return response
+}
+
+const sendComment = async (comment, id) => {
+    let response
+    await axios.post(`${url}sendComment`, { comment, id })
+        .then(res => {
+            response = res
+        })
+        .catch(err => {
+            response = catchError(err)
+        })
+    return response
+}
+
+const search = async (data) => {
+    let response
+    await axios.get(`${url}search/${data}`)
+        .then(res => {
+            response = res
+        })
+        .catch(err => {
+            response = catchError(err)
+        })
+    return response
+}
+
+const plusView = async (id) => {
+    let response
+    await axios.get(`${url}plusView/${id}`)
+        .then(res => {
+            response = res
+        })
+        .catch(err => {
+            response = catchError(err)
+        })
+    return response
+}
 let api
 
+// eslint-disable-next-line
 export default api = {
-    getAll,getItem,createItem,editData,getUser,register,loginUser
+    getAll, getItem, createItem, editData, getUser, register, loginUser, deleteItem, updateProfilePic, sendComment, search,plusView
 }

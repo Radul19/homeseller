@@ -1,10 +1,10 @@
 .itemPage {
   /* background-color: #fbfbfb; */
   background-color: #eee;
-  width: 100vw;
+  width: 100%;
   overflow-x: hidden;
   box-sizing: border-box;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 
@@ -127,6 +127,47 @@
   /* background-color: coral; */
   margin: 2vh auto 7vh;
 }
+
+._comment-container ._textarea-ctn{
+  width: 105%;
+  /* background-color: red; */
+  display: flex;
+  padding: 1em 1em 1em 0px;
+  justify-content: space-between;
+  box-sizing: border-box;
+  position: relative;
+}
+._comment-container ._textarea-ctn ._comment-textarea{
+  width: 90%;
+  border: none;
+  font-family: Roboto;
+  padding: 0.7em 1em;
+  /* background-color: #bd0707c1; */
+  /* border: 1px solid #3b3b3b; */
+  border-radius: 50px;
+  box-shadow: 3px 3px 6px #19191974;
+  margin: 0px;
+  box-sizing: border-box;
+}
+._comment-container ._textarea-ctn button , ._reply-textarea-ctn button{
+  /* position: absolute; */
+  /* right: -4vw; */
+  /* top: 1em; */
+  padding: .5em 1em;
+  border-radius: 10px;
+  background-color: #65b38d;
+  color: #eee;
+  border: 1px solid #eee;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all .1s ease-in-out;
+}
+._comment-container ._textarea-ctn button:hover, ._reply-textarea-ctn button:hover{
+
+  border: 2px solid #65b38d;
+  color: #65b38d;
+  background-color: inherit;
+}
 .reply-display {
   width: calc(100% + 2vw);
   /* background-color: coral; */
@@ -134,9 +175,37 @@
   margin: 2vh 0px 0px 2vw;
 }
 
+/*//////////////////////////////////////////////////////*/
 .comment-display {
   display: flex;
   flex-direction: column;
+}
+
+._reply-textarea-ctn{
+  /* width: 105%;
+  margin-top: 1em;
+  margin-left: 2vw;
+  display: flex; */
+  width: 115%;
+  /* background-color: red; */
+  display: flex;
+  padding: 1em 1em 1em 0px;
+  justify-content: space-evenly;
+  box-sizing: border-box;
+  position: relative;
+  margin-left: -3vw;
+}
+._reply-textarea-ctn ._comment-textarea{
+  width: 90%;
+  border: none;
+  font-family: Roboto;
+  padding: 0.7em 1em;
+  /* background-color: #bd0707c1; */
+  /* border: 1px solid #3b3b3b; */
+  border-radius: 50px;
+  box-shadow: 3px 3px 6px #19191974;
+  margin: 0px;
+  box-sizing: border-box;
 }
 
 ._comment-container p {
@@ -180,8 +249,7 @@
   color: #191919;
   height: auto;
 }
-.itemPage ._general-div ._content-div ._right-content ._room-name {
-}
+
 .itemPage ._general-div ._content-div ._right-content ._dtd {
   color: #818181;
 }
@@ -229,10 +297,18 @@
   margin: 3vh auto;
   background-color: #65b38d;
   color: #eee;
-  border: none;
+  border: 2px solid #eee;
   border-radius: 5px;
   padding: 0.5em 1em;
   font-size: 1.2em;
+  box-sizing: border-box;
+  transition: all .1s ease-in-out;
+}
+
+.itemPage ._general-div ._content-div ._right-content ._btn:hover{
+  background-color: inherit;
+  color: #65b38d;
+  border: 2px solid #65b38d;
 }
 
 /*NEW ITEM STYLES*/

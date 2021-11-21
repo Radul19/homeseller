@@ -1,13 +1,13 @@
-import MainPage from './components/pages/mainPage'
-import SearchPage from './components/pages/searchPage';
-import ExplorerPage from './components/pages/explorerPage';
-import UserPage from './components/pages/userPage';
-import ItemPage from './components/pages/item';
-import ItemPageNew from './components/pages/itemNew'
-import CompanyPage from './components/pages/companyPage';
-import LoadScreen from './components/components/loadScreen';
-import {ItemPageCinema}  from './components/pages/itemCinema';
-import {ItemPageModal}  from './components/pages/itemModal';
+import MainPage from './pages/mainPage'
+import SearchPage from './pages/searchPage';
+import ExplorerPage from './pages/explorerPage';
+import UserPage from './pages/userPage';
+import ItemPage from './pages/item';
+import ItemPageNew from './pages/itemNew'
+import CompanyPage from './pages/companyPage';
+import LoadScreen from './components/loadScreen';
+import {ItemPageCinema}  from './pages/itemCinema';
+import {ItemPageModal}  from './pages/itemModal';
 
 import './styles/reset.css'
 import {
@@ -18,7 +18,7 @@ import {
 
 import { UserContext } from './api/userContext';
 import { useState } from 'react';
-import { Msg } from './components/components/msg';
+import { Msg } from './components/msg';
 
 
 function App() {
@@ -71,7 +71,7 @@ function App() {
           <Route path="/itemPage/:id" >
             <ItemPage />
           </Route>
-          <Route path="/itemCreate" >
+          <Route path="/itemCreate/:id" >
             <ItemPageNew />
           </Route>
           <Route path="/itemPage2" >

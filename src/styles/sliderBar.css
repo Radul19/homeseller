@@ -76,7 +76,9 @@
   border-radius: 5px;
   /* background-color: #fdfdfd; */
   color: #191919;
+  cursor: pointer;
 }
+
 
 ._result .card ._picture{
   width: 100%;

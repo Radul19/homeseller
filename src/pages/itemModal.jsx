@@ -1,5 +1,5 @@
+import "../styles/itemPageModa.css"
 import React from 'react'
-import "../../styles/itemPageModa.css"
 import Header from "../components/header"
 // import img1 from "../../images/house1.jpg"
 // import img2 from "../../images/house2.jpg"
@@ -9,7 +9,7 @@ import Header from "../components/header"
 // import img6 from "../../images/house6.jpg"
 // import img7 from "../../images/house1.jpg"
 import Comment from "../components/comment"
-import pay from "../../images/pay.png"
+import pay from "../images/pay.png"
 import Card from "../components/card"
 
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -17,9 +17,9 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import 'swiper/swiper-bundle.min.css'
 import 'swiper/swiper.min.css'
 // import Swiper core and required modules
-import SwiperCore, {
-    Pagination, Navigation
-} from 'swiper';
+// import SwiperCore, {
+//     Pagination, Navigation
+// } from 'swiper';
 
 export const ItemPageModal = () => {
 
@@ -44,15 +44,7 @@ export const ItemPageModal = () => {
             </main>
             <section className="_general-ctn">
                 <div className="_grid-display">
-                    {/* <img src={img1} className="_modal" alt="" />
-                    <img src={img3} className="_modal" alt="" />
-                    <img src={img4} className="_modal" alt="" />
-                    <img src={img5} className="_modal" alt="" />
-                    <img src={img6} className="_modal" alt="" />
-                    <img src={img7} className="_modal" alt="" />
-                    <img src={img3} className="_modal" alt="" />
-                    <img src={img6} className="_modal" alt="" />
-                    <img src={img7} className="_modal" alt="" /> */}
+
                 </div>
                 <div className="_pay-comments-ctn">
                     <div className="_pay-ctn">

@@ -1,0 +1,54 @@
+/////////////////
+Crud en company pages para eliminar y editar  --------------------------------------- READY left edit
+
+Sticky load screen ------------------------------------------------------------------ READY
+
+Añadir imagenes de perfil ----------------------------------------------------------- READY left css
+
+Comentarios item -------------------------------------------------------------------- READY YESSSSSSS
+
+Busqueda de casas y filtros --------------------------------------------------------- DONE
+
+Tags de los filtros... -------------------------------------------------------------- DELETE
+
+PDF de compra
+
+///////////////// EXTRAS
+
+Migrar a otro heroku
+
+COMENTAR TODO EL MALDITO CODIGO
+
+ELIMINAR LAS MIERDAS QUE NO SE USAN QUE CSM SON DOSCIENTAS
+
+Async load screen after load component
+
+
+
+
+///////// lenght = 6 - 1 = 5
+item = [5,10,15,20,25,30] 
+
+
+
+/////////////////////////////////
+
+Restantes
+
+Diagramas de flujo de la app
+Esquema de la  BD ------------------------------------------ DONE
+
+Citas y calendario / Usuario y empresa + rif
+
+Enviar imagenes -------------------------------------------- DONE
+
+Verificar Empresa y perfil de administrador
+
+Puntos fuertes y debiles y ppreguntas frecuentes 
+
+
+/// Extra
+
+leaflet
+
+Las empresas no se pueden comentar entre si

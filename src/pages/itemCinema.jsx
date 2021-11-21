@@ -1,8 +1,8 @@
+import "../styles/ItemPageCinema.css"
 import React from 'react'
 import Header from '../components/header'
-import "../../styles/ItemPageCinema.css"
 import Comment from "../components/comment"
-import pay from "../../images/pay.png"
+import pay from "../images/pay.png"
 import Card from "../components/card"
 // import img1 from "../../images/house2.jpg"
 
@@ -12,9 +12,9 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import 'swiper/swiper-bundle.min.css'
 import 'swiper/swiper.min.css'
 // import Swiper core and required modules
-import SwiperCore, {
-    Pagination, Navigation
-} from 'swiper';
+// import SwiperCore, {
+//     Pagination, Navigation
+// } from 'swiper';
 
 export const ItemPageCinema = () => {
 

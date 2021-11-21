@@ -1,18 +1,18 @@
-import '../../styles/MainPage.css'
-import mainBackground from '../../images/imageMain.png'
-import logo from '../../images/LogoWhite.png'
+import '../styles/MainPage.css'
+import mainBackground from '../images/imageMain.png'
+import logo from '../images/LogoWhite.png'
 import { useContext, useState } from 'react'
-import api from '../../api/account'
+import api from '../api/account'
 import { useHistory } from 'react-router-dom'
 // import LoadScreen from '../components/loadScreen'
-import { UserContext } from '../../api/userContext'
+import { UserContext } from '../api/userContext'
 
 
 
 
 
 import { linkClick, loadOut } from '../components/loadScreen'
-import { useHandleErr } from '../../api/useHandleErr'
+import { useHandleErr } from '../api/useHandleErr'
 
 const MainPage = () => {
 
