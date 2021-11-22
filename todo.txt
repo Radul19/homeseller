@@ -1,35 +1,3 @@
-/////////////////
-Crud en company pages para eliminar y editar  --------------------------------------- READY left edit
-
-Sticky load screen ------------------------------------------------------------------ READY
-
-Añadir imagenes de perfil ----------------------------------------------------------- READY left css
-
-Comentarios item -------------------------------------------------------------------- READY YESSSSSSS
-
-Busqueda de casas y filtros --------------------------------------------------------- DONE
-
-Tags de los filtros... -------------------------------------------------------------- DELETE
-
-PDF de compra
-
-///////////////// EXTRAS
-
-Migrar a otro heroku
-
-COMENTAR TODO EL MALDITO CODIGO ----------------------------------------------------- READY
-
-ELIMINAR LAS MIERDAS QUE NO SE USAN QUE CSM SON DOSCIENTAS
-
-Async load screen after load component
-
-
-
-
-///////// lenght = 6 - 1 = 5
-item = [5,10,15,20,25,30] 
-
-
 
 /////////////////////////////////
 Restantes
@@ -53,9 +21,9 @@ leaflet
 
 Las empresas no se pueden comentar entre si
 
-///7b78ad9a6c4c220e84a0520af5dea40c5235d4bdf7873437972260205000da3b/be8072fbb4f74ae02fcb24258e9cdbffc9959565
 
 
+///// Citas
 Nombre de la Persona
 Fecha
 Numero de contacto

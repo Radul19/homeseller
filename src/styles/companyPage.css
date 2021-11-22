@@ -33,7 +33,7 @@
   position: relative;
 }
 
-._img-div ._black-div:hover::after{
+._img-div ._black-div:hover::after {
   content: "Anadir Imagen";
   position: absolute;
   align-items: center;
@@ -166,8 +166,8 @@
   justify-content: right;
 }
 .companyPage ._general-container ._content-container ._left ._btn-ctn button {
-  width: 25%;
-  padding: 0.5em 1em;
+  max-width: 35%;
+  padding: 0.5em 2em;
   font-size: 0.9em;
   box-sizing: border-box;
   border-radius: 10px;
@@ -179,6 +179,7 @@
   border: 2px solid #fff;
   font-weight: bold;
   cursor: pointer;
+  margin-right: 1.5em;
 }
 .companyPage
   ._general-container
@@ -262,34 +263,34 @@
   display: flex;
 }
 ._item-display ._btns-ctn button {
+  margin-right: 1.5em;
   cursor: pointer;
   padding: 0.5em 1.5em;
   border: none;
-  margin-right: 1.5em;
   border-radius: 5px;
   border: none;
   color: #fff;
   font-weight: bold;
   border: 2px solid #fff;
-  transition: all .2s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 
 ._item-display ._btns-ctn button:nth-child(1) {
-  background-color: #C7AC62;
+  background-color: #c7ac62;
 }
 ._item-display ._btns-ctn button:nth-child(1):hover {
   background-color: #fff;
-  color: #C7AC62;
-  border: 2px solid #C7AC62;
+  color: #c7ac62;
+  border: 2px solid #c7ac62;
 }
 ._item-display ._btns-ctn button:nth-child(2) {
-  background-color: #37836B;
+  background-color: #37836b;
   /* background-color: #E8CF89; */
 }
 ._item-display ._btns-ctn button:nth-child(2):hover {
   background-color: #fff;
-  color: #37836B;
-  border: 2px solid #37836B;
+  color: #37836b;
+  border: 2px solid #37836b;
 }
 .companyPage ._general-container ._content-container ._right {
   width: 30%;
@@ -330,8 +331,8 @@
 
 .blackScreen2 ._modal {
   color: #191919;
-  width: 40vw;
-  height: 55vh;
+  width: 50vw;
+  height: 65vh;
   left: 30vw;
   background-color: #eee;
   border-radius: 20px;
@@ -351,6 +352,30 @@
 .blackScreen2 ._modal h3 {
   margin: 0px;
 }
+
+/*DAY PICKER*/
+
+.blackScreen2 ._modal ._info-ctn {
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+}
+.blackScreen2 ._modal ._info-ctn ._calendar-div {
+  width: 40%;
+}
+
+.blackScreen2 ._modal ._info-ctn ._date-ctn {
+  display: flex;
+  width: 40%;
+  flex-direction: column;
+}
+.blackScreen2 ._modal ._info-ctn ._date-ctn button{
+  max-width: 50%;
+  padding: .5em 1em;
+  margin: 0px auto;
+}
+
+/* /////////////////////// */
 
 .blackScreen2 ._modal ._img-ctn {
   display: flex;
@@ -394,7 +419,7 @@
   font-size: 1em;
   cursor: pointer;
   font-weight: bold;
-  transition: all .2s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 
 .blackScreen2 ._modal ._btn-ctn ._accept {
@@ -414,5 +439,4 @@
   background-color: #eee;
   border: 2px solid #242b34;
   color: #242b34;
-
 }

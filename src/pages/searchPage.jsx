@@ -11,6 +11,7 @@ import Banner from "../images/Banner1.png"
 import miniLogo from "../images/MiniLogo.png"
 import backImage from "../images/searchBackImage.png"
 
+
 /// Componente Log Out para el header
 const LogOut = ({history}) => {
     /// Extrae el contenido de UserContext 

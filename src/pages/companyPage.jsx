@@ -9,6 +9,8 @@ import SliderColum from "../components/sliderColum"
 import { loadOut } from "../components/loadScreen"
 import { Footer } from "../components/footer"
 
+import DayPicker from 'react-day-picker';
+import 'react-day-picker/lib/style.css';
 
 
 import img1 from "../images/profile-icon.jpg"
@@ -91,7 +93,7 @@ const CompanyPage = () => {
     const { id } = useParams()
     ///UseHistory para cambiar entre paginas
     const history = useHistory()
-    
+
     ///Extraems las variables del UserContext
     const { setFade, setLoad, user, setMsg } = useContext(UserContext)
     ///Estado para habilitar la edicion de los datos
@@ -210,7 +212,7 @@ const CompanyPage = () => {
                 <div className="blackScreen2">
                     <div className="_modal">
                         <h3>Seleccione un tipo de presentacion</h3>
-                        <div className="_img-ctn">
+                        {/* <div className="_img-ctn">
                             <div className={newItemType === 1 ? "_selected" : null} onClick={() => { setNewItemType(1) }}  >
                                 <img src={Grp1} alt="" />
                                 <p>Tradicional</p>
@@ -222,6 +224,18 @@ const CompanyPage = () => {
                             <div className={newItemType === 3 ? "_selected" : null} onClick={() => { setNewItemType(3) }} >
                                 <img src={Grp3} alt="" />
                                 <p>Ventanas Modale</p>
+                            </div>
+                        </div> */}
+                        <div className="_info-ctn">
+                            <div className="_calendar-div">
+                                <DayPicker />
+                            </div>
+                            <div className="_date-ctn">
+                                <p>Nombre Completo</p>
+                                <p>Fecha</p>
+                                <p>Numero de contacto</p>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat quod ex perferendis laborum ipsum, deserunt necessitatibus modi repellendus, enim asperiores consequatur porro explicabo, incidunt ea.</p>
+                                <button>Ver publicacion &#8640;</button>
                             </div>
                         </div>
                         <div className="_btn-ctn">
@@ -239,7 +253,7 @@ const CompanyPage = () => {
                         <div className="_black-div" onClick={profileClick} >
                             {/* Si hay una foto de perfil presentala, si no la hay, presenta la imagen de usuario predeterminada */}
                             {data.profilepic === "" ?
-                                <img src={img1} alt="" className="_profile-picture"  />
+                                <img src={img1} alt="" className="_profile-picture" />
                                 : <img src={data.profilepic} alt="" className="_profile-picture" />}
                             {/* Input file fantasma al que se le hace referencia para el click  */}
                             <input type='file' id='file' name="images" ref={inputFile} style={{ display: 'none' }} onChange={(e) => { inputFileChange(e) }} />
@@ -274,7 +288,8 @@ const CompanyPage = () => {
                             <h2 style={{ width: "50%", }} className="_subtitle" >Inmobiliarios en Venta</h2>
                             <div className="_btn-ctn" >
                                 {/* Boton para el display de la ventana modal que mostrara los tipos de publicaciones q se pueden crear */}
-                                <button onClick={() => { setCreateItem(true) }}  >Anadir</button>
+                                <button onClick={() => { loadOut(setFade, setLoad, history, "/itemCreate/new") }}  >Anadir</button>
+                                <button onClick={() => { setCreateItem(true) }}  >Calendario</button>
                             </div>
                         </div>
                         {/* Condicional donde, mientras la primera publicacion no este vacia, muestra todo su contenido,
