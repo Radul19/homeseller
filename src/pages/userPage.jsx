@@ -61,6 +61,8 @@ const UserPage = () => {
             /// Realiza una busqueda del usuario por su ID
             const res = await api.getUser(id)
             if (res.status === 200) {
+                /// Guardamos los datos del usuario en el estado correspondiente
+                setUserData(res.data)
                 /// Si todo sale bien , busca todas las publicaciones para mostrarlas en SliderColum
                 const res2 = await api.getAll()
                 if (res2.status === 200) {

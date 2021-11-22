@@ -211,7 +211,7 @@ const CompanyPage = () => {
             {createItem ?
                 <div className="blackScreen2">
                     <div className="_modal">
-                        <h3>Seleccione un tipo de presentacion</h3>
+                        <h3>Seleccione una fecha</h3>
                         {/* <div className="_img-ctn">
                             <div className={newItemType === 1 ? "_selected" : null} onClick={() => { setNewItemType(1) }}  >
                                 <img src={Grp1} alt="" />

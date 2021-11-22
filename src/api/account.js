@@ -1,13 +1,13 @@
 const axios = require("axios").default
 
 //Aqui se alterna entre el local host y la url en heroku del servidor
-// const url = "http://localhost:4000/"
-const url = "https://home-seller-back.herokuapp.com/"
+const url = "http://localhost:4000/"
+// const url = "https://home-seller-back.herokuapp.com/"
 
 
 /// Funcion general para el catch error que se usa en TODAS las peticiones 
 const catchError = async (err) => {
-    /// Error normal
+    /// Error  
     if (err.response) {
         console.log(err.response)
         return err.response
@@ -94,6 +94,7 @@ const editData = async (data, type) => {
 }
 /// Crear item
 const createItem = async (dataOriginal, files) => {
+    
     /// Aqui si hay trabajo
     /// El response sigue siendo normal
     let response
@@ -124,6 +125,7 @@ const createItem = async (dataOriginal, files) => {
     files.forEach(element => {
         formData.append("images", element)
     });
+
     /// Enviamos el form data y listo
     await axios.post(`${url}createItem`, formData)
         .then(res => {
@@ -202,17 +204,18 @@ const sendComment = async (comment, id) => {
     return response
 }
 
-// const search = async (data) => {
-//     let response
-//     await axios.get(`${url}search/${data}`)
-//         .then(res => {
-//             response = res
-//         })
-//         .catch(err => {
-//             response = catchError(err)
-//         })
-//     return response
-// }
+/// Funcion para la barra de busqueda del header
+const search = async (data) => {
+    let response
+    await axios.get(`${url}search/${data}`)
+        .then(res => {
+            response = res
+        })
+        .catch(err => {
+            response = catchError(err)
+        })
+    return response
+}
 
 /// Le sumamos +1 a la vista de una publicacion cuando la renderizamos
 const plusView = async (id) => {
@@ -230,5 +233,5 @@ let api
 
 // eslint-disable-next-line
 export default api = {
-    getAll, getItem, createItem, editData, getUser, register, loginUser, deleteItem, updateProfilePic, sendComment,  plusView
+    getAll, getItem, createItem, editData, getUser, register, loginUser, deleteItem, updateProfilePic, sendComment,  plusView , search
 }

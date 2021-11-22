@@ -68,7 +68,7 @@ const ItemPageNew = () => {
                     })
 
                     /// Le añadimos los datos de la imagen al estado Files, para poder enviar todas las imagenes al servidor y subirlas a cloudinary
-                    setFiles([...files], file)
+                    files.push(file)
                     /// Ajustamos el index de la imagen para asi mostrar la nueva que se esta creando
                     setImgIndex(imgIndex + 1)
                     /// Estado de las ¨Mini Imagenes¨ le añadimos la url de la imagen que seleccionamos y asi poder mostrarla
