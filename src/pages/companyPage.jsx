@@ -263,7 +263,9 @@ const CompanyPage = () => {
                         {/* Condicional, si se van a editar los datos, oculta los "p" y presenta los "input" */}
                         {!edit ? (
                             <>
-                                <p className="_company-name" >{data.name}</p>
+                                <p className="_company-name" onClick={()=>{
+                                    console.log(data)
+                                }} >{data.name}</p>
                                 <p>{data.description}</p>
                                 <p className="_company-email" >{data.email}</p>
                             </>
