@@ -17,7 +17,7 @@ PDF de compra
 
 Migrar a otro heroku
 
-COMENTAR TODO EL MALDITO CODIGO
+COMENTAR TODO EL MALDITO CODIGO ----------------------------------------------------- READY
 
 ELIMINAR LAS MIERDAS QUE NO SE USAN QUE CSM SON DOSCIENTAS
 
@@ -32,17 +32,17 @@ item = [5,10,15,20,25,30]
 
 
 /////////////////////////////////
-
 Restantes
 
-Diagramas de flujo de la app
 Esquema de la  BD ------------------------------------------ DONE
-
-Citas y calendario / Usuario y empresa + rif
 
 Enviar imagenes -------------------------------------------- DONE
 
-Verificar Empresa y perfil de administrador
+Citas y calendario / Usuario y empresa + rif 
+
+Verificar Empresa y perfil de administrador 
+
+Diagramas de flujo de la app -------------------------------- DONE
 
 Puntos fuertes y debiles y ppreguntas frecuentes 
 
@@ -52,3 +52,12 @@ Puntos fuertes y debiles y ppreguntas frecuentes
 leaflet
 
 Las empresas no se pueden comentar entre si
+
+///7b78ad9a6c4c220e84a0520af5dea40c5235d4bdf7873437972260205000da3b/be8072fbb4f74ae02fcb24258e9cdbffc9959565
+
+
+Nombre de la Persona
+Fecha
+Numero de contacto
+Descripcion de la Cita
+Enlace a la publicacion
