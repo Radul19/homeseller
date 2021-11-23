@@ -197,7 +197,9 @@ const MainPage = () => {
                     </div>
                     <div className="thirdTextContainer" >
                         {/* Texto con el OnClick para ir a la pagina de busqueda como invitado, sin iniciar sesion */}
-                        <p onClick={() => { loadOut(setFade, setLoad, history, "/search") }} className="thirdText" >Continuar como invitado</p>
+                        <p onClick={() => { 
+                            setLoad(true)
+                            loadOut(setFade, setLoad, history, "/search") }} className="thirdText" >Continuar como invitado</p>
 
                     </div>
                 </div>
