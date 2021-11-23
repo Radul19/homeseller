@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import api from "../api/account"
+import api from "../api/api"
 import "../styles/sliderBar.css"
 import Card from "./card"
 

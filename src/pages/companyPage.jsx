@@ -1,7 +1,7 @@
 import "../styles/companyPage.css"
 import { useContext, useEffect, useRef, useState } from "react"
 import { useHistory, useParams } from "react-router"
-import api from "../api/account"
+import api from "../api/api"
 import { UserContext } from "../api/userContext"
 import { useHandleErr } from "../api/useHandleErr"
 import Header from "../components/header"

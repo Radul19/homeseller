@@ -2,7 +2,7 @@ import "../styles/userPage.css"
 import { useContext, useEffect, useState } from "react"
 import { useParams } from "react-router"
 import { UserContext } from "../api/userContext"
-import api from "../api/account"
+import api from "../api/api"
 import { useHandleErr } from "../api/useHandleErr"
 
 import Header from "../components/header"
