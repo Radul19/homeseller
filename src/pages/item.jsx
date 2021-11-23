@@ -2,7 +2,7 @@ import "../styles/itemPage.css";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { useContext } from "react/cjs/react.development";
-import api from "../api/account";
+import api from "../api/api";
 import { useHandleErr } from '../api/useHandleErr'
 import { UserContext } from "../api/userContext";
 

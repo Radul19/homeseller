@@ -1,7 +1,7 @@
 import '../styles/MainPage.css'
 import { useHistory } from 'react-router-dom'
 import { useContext, useState } from 'react'
-import api from '../api/account'
+import api from '../api/api'
 import { useHandleErr } from '../api/useHandleErr'
 import { UserContext } from '../api/userContext'
 import {  loadOut } from '../components/loadScreen'
