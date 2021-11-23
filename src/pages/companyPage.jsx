@@ -370,7 +370,9 @@ const CompanyPage = () => {
                             <h2 style={{ width: "50%", }} className="_subtitle" >Inmobiliarios en Venta</h2>
                             <div className="_btn-ctn" >
                                 {/* Boton para el display de la ventana modal que mostrara los tipos de publicaciones q se pueden crear */}
-                                <button onClick={() => { loadOut(setFade, setLoad, history, "/itemCreate/new") }}  >Anadir</button>
+                                <button onClick={() => {
+                                    setLoad(true)
+                                    loadOut(setFade, setLoad, history, "/itemCreate/new") }}  >Anadir</button>
                                 <button onClick={() => { setCreateItem(true) }}  >Calendario</button>
                             </div>
                         </div>
