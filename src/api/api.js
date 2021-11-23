@@ -229,9 +229,35 @@ const plusView = async (id) => {
         })
     return response
 }
+
+const setDate = async (dates,id)=>{
+    let response
+    await axios.post(`${url}setDate`,{dates,id})
+        .then(res => {
+            response = res
+        })
+        .catch(err => {
+            response = catchError(err)
+        })
+    return response
+}
+
+const getDates = async (id,type)=>{
+    let response
+    await axios.get(`${url}getDates/${id}/${type}`)
+        .then(res => {
+            response = res
+        })
+        .catch(err => {
+            response = catchError(err)
+        })
+    return response
+}
+
+
 let api
 
 // eslint-disable-next-line
 export default api = {
-    getAll, getItem, createItem, editData, getUser, register, loginUser, deleteItem, updateProfilePic, sendComment,  plusView , search
+    getAll, getItem, createItem, editData, getUser, register, loginUser, deleteItem, updateProfilePic, sendComment,  plusView , search,setDate,getDates
 }

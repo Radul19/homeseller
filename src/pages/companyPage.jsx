@@ -9,9 +9,13 @@ import SliderColum from "../components/sliderColum"
 import { loadOut } from "../components/loadScreen"
 import { Footer } from "../components/footer"
 
+import moment from "moment"
+
 import DayPicker from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
 
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
 
 import img1 from "../images/profile-icon.jpg"
 
@@ -117,6 +121,18 @@ const CompanyPage = () => {
     })
     /// Estado para almacenar todas las publicaciones de la compañia
     const [posts, setPosts] = useState([""])
+    /// Estado para almacenar las citas de la compañia
+    const [dates, setDates] = useState([])
+    /// Estado para almacenar los datos de una cita en especifico
+    const [selectedDate, setSelectedDate] = useState({
+        date: "...",
+        guest: "...",
+        name: "...",
+        owner: "...",
+        phone: "...",
+        topic: "...",
+        postId:"",
+    })
 
 
     /// Use Effect que se ejecutara al cargar el componente 
@@ -125,11 +141,29 @@ const CompanyPage = () => {
         (async () => {
             const res = await api.getUser(id)
             if (res.status === 200) {
-                console.log(res)
-                /// Recibimos los posts y los datos de la compañia, luego los añadimos a los respectivos estados
-                setPosts(res.data.posts)
-                setData(res.data)
-                setPrevData(res.data)
+                /// Si se encontro la compañia, ahora busca sus citas pendientes
+                const res2 = await api.getDates(id, 2)
+                if (res2.status === 200) {
+                    // console.log(res)
+                    // console.log(res2)
+                    /// Recibimos los posts y los datos de la compañia, luego los añadimos a los respectivos estados
+                    setPosts(res.data.posts)
+                    setData(res.data)
+                    setPrevData(res.data)
+                    /// Insertar en el array de citas cada una de las publicaciones con cada una de sus citas, con sus datos completos
+                    // console.log(res2.data[0].dates)
+                    let aux = []
+                    await res2.data.forEach(element => {
+                        element.dates.forEach(date => {
+                            // setDates([...dates,date])
+                            aux.push(date)
+                        });
+                        // dates.push(element.dates)
+                    });
+                    setDates([...aux])
+                } else {
+                    handleError(res)
+                }
             } else {
                 handleError(res)
             }
@@ -199,7 +233,10 @@ const CompanyPage = () => {
             }
         }
     }
-
+    const returnDate = (obj) => {
+        console.log(obj)
+        return obj.date
+    }
 
 
     return (
@@ -208,7 +245,16 @@ const CompanyPage = () => {
             {createItem ?
                 <div className="blackScreen2">
                     <div className="_modal">
-                        <h3>Seleccione una fecha</h3>
+                        <h3
+                            onClick={() => {
+                                // console.log(dates.filter(returnDate))
+                                console.log(dates)
+                                dates.map((item) => {
+                                    console.log(item)
+                                })
+                            }
+                            }
+                        >Seleccione una fecha</h3>
                         {/* <div className="_img-ctn">
                             <div className={newItemType === 1 ? "_selected" : null} onClick={() => { setNewItemType(1) }}  >
                                 <img src={Grp1} alt="" />
@@ -225,19 +271,48 @@ const CompanyPage = () => {
                         </div> */}
                         <div className="_info-ctn">
                             <div className="_calendar-div">
-                                <DayPicker />
+                                <Calendar
+                                    onChange={(e) => {
+                                        const date = moment(e)
+                                        const fixDate = moment(date).format("DD-MM-YYYY")
+
+                                        let aux = dates.find(item => {
+                                            if (item.date === fixDate) return item
+                                        })
+                                        if (aux !== undefined) setSelectedDate({ ...aux })
+                                        else {
+                                            setSelectedDate({
+                                                date: "...",
+                                                guest: "...",
+                                                name: "...",
+                                                owner: "...",
+                                                phone: "...",
+                                                topic: "...",
+                                                postId:""
+                                            })
+                                        }
+                                    }}
+                                    tileClassName={({ date, view }) => {
+                                        if (dates.find(x => x.date === moment(date).format("DD-MM-YYYY"))) {
+                                            return 'highlight'
+                                        }
+                                    }}
+                                />
                             </div>
                             <div className="_date-ctn">
-                                <p>Nombre Completo</p>
-                                <p>Fecha</p>
-                                <p>Numero de contacto</p>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat quod ex perferendis laborum ipsum, deserunt necessitatibus modi repellendus, enim asperiores consequatur porro explicabo, incidunt ea.</p>
-                                <button>Ver publicacion &#8640;</button>
+                                <p>{selectedDate.name}</p>
+                                <p>{selectedDate.date}</p>
+                                <p>{selectedDate.phone}</p>
+                                <p>{selectedDate.topic}</p>
                             </div>
                         </div>
                         <div className="_btn-ctn">
-                            <button className="_cancel" onClick={() => { setCreateItem(false) }} >Cancelar</button>
-                            <button className="_accept" onClick={()=>{loadOut(setFade, setLoad, history, `/itemCreate/new`)}} >Aceptar</button>
+                            <button className="_cancel" onClick={() => { setCreateItem(false) }} >Regresar</button>
+                            <button
+                                className="_accept"
+                                onClick={() => {
+                                    loadOut(setFade, setLoad, history, `/itemPage/${selectedDate.postId}`)
+                                }} >Ver Publicacion</button>
                         </div>
                     </div>
                 </div>
@@ -260,7 +335,7 @@ const CompanyPage = () => {
                         {/* Condicional, si se van a editar los datos, oculta los "p" y presenta los "input" */}
                         {!edit ? (
                             <>
-                                <p className="_company-name" onClick={()=>{
+                                <p className="_company-name" onClick={() => {
                                     console.log(data)
                                 }} >{data.name}</p>
                                 <p>{data.description}</p>

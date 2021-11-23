@@ -4,9 +4,11 @@ import Card from "./card"
 import left from "../images/left.png"
 import right from "../images/right.png"
 
+import SwiperCore, { Navigation} from 'swiper'
 import { Swiper, SwiperSlide } from "swiper/react";
 import 'swiper/swiper-bundle.min.css'
 import 'swiper/swiper.min.css'
+SwiperCore.use([Navigation])
 
 /// Sliderbar con las propiedades data, 
 //SPV (slide per view (es la cantidad de imagenes que se van a saltar con cada click) 

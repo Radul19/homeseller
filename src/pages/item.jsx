@@ -21,6 +21,103 @@ import 'react-day-picker/lib/style.css';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 
+//////  COMMENT  ////////////////////////////////////////////////////////
+const Comment = ({ item, index, dataContainer, setDataContainer }) => {
+    /// El id extraido del url para buscar al dueño de la publicacion
+    const { id } = useParams()
+    /// Extrer los datos del UserContext , "user" : para saber la id del usuario logeado que va a comentar
+    /// y setMsg para los errores
+    const { user, setMsg } = useContext(UserContext)
+    /// Hook para los errores
+    const { handleError } = useHandleErr()
+    /// Estado para manejar el input en caso de haber
+    const [input, setInput] = useState("")
+    /// Estado para guardar quien esta escribiendo o escribió el comentario
+    const [username, setUsername] = useState("")
+
+    /// Cuando cargues el comentario haz una peticion buscando al usuario por ID
+    /// y guarda sus datos 
+    useEffect(() => {
+        (async () => {
+            const res = await api.getUser(item.user_id)
+            console.log(res)
+            if (res.status === 200) {
+                setUsername(res.data.name)
+            } else {
+                // handleError(res)
+            }
+        })()
+        return 0
+        // eslint-disable-next-line
+    }, [])
+
+    /// Funcion para responder a un comentario
+    const replyClick = async () => {
+
+        /// Copiamos el contenido de los comentarios en un array nuevo
+        const commentData = [...dataContainer.comments]
+        /* Los comentarios estan presentados en orden inverso, mas nuevos arriba y mas viejos abajo
+         Por ende, los index estan invertidos, pero para eso se usa lo siguiente
+         [la cantidad de comentarios que hay] - [1] - [el index de el comentario]
+         esto nos dara la posicion original de el comentario y podremos modificarlo y añadirle la respuesta
+        */
+        const position = dataContainer.comments.length - 1 - index
+
+        /// Al array que copiamos, le añadimos el valor de el input y la fecha/hora actual
+        commentData[position].reply = input
+        commentData[position].reply_date = Date.now()
+        /// Hacemos una peticion para enviar los datos y si todo sale bien, añadimos el contenedor de comentario que 
+        /// copiamos en el estado de ¨dataContainer¨, una vez que el comentario tiene respuesta, no se puede responder mas
+        const res = await api.sendComment(commentData, id)
+        if (res.status === 200) {
+            setMsg({
+                text: "Comentario publicado satisfactoriamente",
+                color: "green"
+            })
+            setDataContainer({ ...dataContainer, comments: commentData })
+        } else {
+            handleError(res)
+        }
+    }
+
+    return (
+        <>
+            {/* Presenta el nombre de usuario y el texto de el comentario */}
+            <div className="comment-display" >
+                <p className="_date" >{username}</p>
+                <p className="_comment">{item.text}</p>
+            </div>
+            {/* Si el comentario no tiene respuesta, verifica si el dueño de la publicacion
+            es el mismo usuario que esta logeado actualmente */}
+            {item.reply === "" ?
+                ///////////// Verificacion del dueño de la publicacion y usuario logeado
+                /// Si el usuario logeado es el mismo que el dueño, entonces puede responder los comentarios
+                dataContainer.owner === user.id ?
+                    <div className="_reply-textarea-ctn">
+                        <button onClick={replyClick} >Enviar</button>
+                        {/* Componente Textarea pero con tamaño que se ajusta automaticamente */}
+                        <TextareaAutosize
+                            minRows={1}
+                            maxRows={3}
+                            placeholder={"Escribe aqui..."}
+                            value={input}
+                            onChange={(e) => {
+                                setInput(e.target.value)
+                                // setDataContainer({...dataContainer,  })
+                            }}
+                            className="_comment-textarea"
+                        />
+                    </div>
+                    : null
+                ///////////// En caso de existir una respuesta, presentala
+                : <div className="reply-display" >
+                    <p className="_date" >{`${item.reply_date}`}</p>
+                    <p className="_comment">{item.reply}</p>
+                </div>}
+        </>
+    )
+}
+
 
 //////   ITEM PAGE ////////////////////////////////////////////////////////
 const ItemPage = () => {
@@ -49,95 +146,7 @@ const ItemPage = () => {
         )
     }
 
-    //////  COMMENT  ////////////////////////////////////////////////////////
-    const Comment = ({ item, index }) => {
-        /// Estado para manejar el input en caso de haber
-        const [input, setInput] = useState("")
-        /// Estado para guardar quien esta escribiendo o escribió el comentario
-        const [username, setUsername] = useState("")
 
-        /// Cuando cargues el comentario haz una peticion buscando al usuario por ID
-        /// y guarda sus datos 
-        useEffect(() => {
-            (async () => {
-                const res = await api.getUser(item.user_id)
-                console.log(res)
-                if (res.status === 200) {
-                    setUsername(res.data.name)
-                } else {
-                    // handleError(res)
-                }
-            })()
-            return 0
-            // eslint-disable-next-line
-        }, [])
-
-        /// Funcion para responder a un comentario
-        const replyClick = async () => {
-
-            /// Copiamos el contenido de los comentarios en un array nuevo
-            const commentData = [...dataContainer.comments]
-            /* Los comentarios estan presentados en orden inverso, mas nuevos arriba y mas viejos abajo
-             Por ende, los index estan invertidos, pero para eso se usa lo siguiente
-             [la cantidad de comentarios que hay] - [1] - [el index de el comentario]
-             esto nos dara la posicion original de el comentario y podremos modificarlo y añadirle la respuesta
-            */
-            const position = dataContainer.comments.length - 1 - index
-
-            /// Al array que copiamos, le añadimos el valor de el input y la fecha/hora actual
-            commentData[position].reply = input
-            commentData[position].reply_date = Date.now()
-            /// Hacemos una peticion para enviar los datos y si todo sale bien, añadimos el contenedor de comentario que 
-            /// copiamos en el estado de ¨dataContainer¨, una vez que el comentario tiene respuesta, no se puede responder mas
-            const res = await api.sendComment(commentData, id)
-            if (res.status === 200) {
-                setMsg({
-                    text: "Comentario publicado satisfactoriamente",
-                    color: "green"
-                })
-                setDataContainer({ ...dataContainer, comments: commentData })
-            } else {
-                handleError(res)
-            }
-        }
-
-        return (
-            <>
-                {/* Presenta el nombre de usuario y el texto de el comentario */}
-                <div className="comment-display" >
-                    <p className="_date" >{username}</p>
-                    <p className="_comment">{item.text}</p>
-                </div>
-                {/* Si el comentario no tiene respuesta, verifica si el dueño de la publicacion
-                es el mismo usuario que esta logeado actualmente */}
-                {item.reply === "" ?
-                    ///////////// Verificacion del dueño de la publicacion y usuario logeado
-                    /// Si el usuario logeado es el mismo que el dueño, entonces puede responder los comentarios
-                    dataContainer.owner === user.id ?
-                        <div className="_reply-textarea-ctn">
-                            <button onClick={replyClick} >Enviar</button>
-                            {/* Componente Textarea pero con tamaño que se ajusta automaticamente */}
-                            <TextareaAutosize
-                                minRows={1}
-                                maxRows={3}
-                                placeholder={"Escribe aqui..."}
-                                value={input}
-                                onChange={(e) => {
-                                    setInput(e.target.value)
-                                    // setDataContainer({...dataContainer,  })
-                                }}
-                                className="_comment-textarea"
-                            />
-                        </div>
-                        : null
-                    ///////////// En caso de existir una respuesta, presentala
-                    : <div className="reply-display" >
-                        <p className="_date" >{`${item.reply_date}`}</p>
-                        <p className="_comment">{item.reply}</p>
-                    </div>}
-            </>
-        )
-    }
     /////// ESTADOS ////////////////////////////////////////////////////////////////////
     /// Estado para la informacion general de la publicacion
     const [dataContainer, setDataContainer] = useState({
@@ -152,6 +161,7 @@ const ItemPage = () => {
             detaildescription: ["cargando..."],
             url: ""
         }],
+        dates: [],
     })
     /// Estado para el index de la imagen que se esta mostrando y 
     /// asi buscar y presentar la descripcion detallada de la imagen
@@ -166,6 +176,8 @@ const ItemPage = () => {
     /// Estado para el modal
     const [modal, setModal] = useState(false)
 
+    /// Estado para saber si la persona ya aparto una cita o no
+    const [enableDate, setEnableDate] = useState(true)
     /// Estado para seleccionar dias en el calendario
     const [dayClick, setDayClick] = useState(null)
     const past = {
@@ -180,9 +192,25 @@ const ItemPage = () => {
         name: "",
         date: "Seleccione una fecha",
         topic: "",
-        phone: ""
+        phone: "",
+        guest: user.id,
+        postId: id,
     })
     const handleDayInputs = (name, value) => { setDateInputs({ ...dateInputs, [name]: value }) }
+    const setupDate = async () => {
+        const res = await api.setDate(dataContainer.dates, id)
+        if(res.status === 200){
+            setEnableDate(false)
+            setModal(false)
+            setMsg({
+                color:"green",
+                text:"Cita reservada exitosamente"
+            })
+        }else{
+            handleError(res)
+        }
+        console.log(res)
+    }
     const mark = [
         '04-11-2021',
         '03-11-2021',
@@ -199,6 +227,11 @@ const ItemPage = () => {
                 /// Y presenta la primera imagen en el contenedor grande
                 setShow(res.data.images[0].url)
                 console.log(res);
+                if(user.type === true){
+                    res.data.dates.forEach(element => {
+                        if(element.guest === id) setEnableDate(false)
+                    });
+                }
             } else {
                 handleError(res)
             }
@@ -237,51 +270,34 @@ const ItemPage = () => {
         }
     }
 
+    
+
     return (
         <div className="itemPage">
             {modal ?
                 <div className="blackScreen2">
                     <div className="_modal">
-                        <h3>Seleccione una fecha</h3>
-                        {/* <div className="_img-ctn">
-                            <div className={newItemType === 1 ? "_selected" : null} onClick={() => { setNewItemType(1) }}  >
-                                <img src={Grp1} alt="" />
-                                <p>Tradicional</p>
-                            </div>
-                            <div className={newItemType === 2 ? "_selected" : null} onClick={() => { setNewItemType(2) }} >
-                                <img src={Grp2} alt="" />
-                                <p>Modo cine</p>
-                            </div>
-                            <div className={newItemType === 3 ? "_selected" : null} onClick={() => { setNewItemType(3) }} >
-                                <img src={Grp3} alt="" />
-                                <p>Ventanas Modale</p>
-                            </div>
-                        </div> */}
+                        <h3 onClick={()=>{
+                            
+                            console.log(dataContainer)
+                        }} >Seleccione una fecha</h3>
                         <div className="_info-ctn">
-                            <div className="_calendar-div">
-                                {/* <DayPicker
-                                    style={ pastStyle}
-                                    modifiers={past}
-                                    modifiersStyles={pastStyle}
-                                    selectedDays={dayClick}
-                                    onDayClick={(day, { selected }) => {
-                                        if (selected) {
-                                            setDayClick(undefined)
-                                            return
-                                        }
-                                        setDayClick(day)
-                                    }}
-                                /> */}
+                            <div className="_calendar-div" >
                                 <Calendar
-                                minDate={new Date(Date.now())}
+                                tileClassName={({ date, view }) => {
+                                    if (dataContainer.dates.find(x => x.date === moment(date).format("DD-MM-YYYY"))) {
+                                        return 'disable-day'
+                                    }
+                                }}
+                                    minDate={new Date(Date.now())}
                                     onChange={(e) => {
-                                        console.log(e)
-                                        setDayClick(e)
-                                        handleDayInputs("date", `${e}`)
-                                    }}
-                                    tileClassName={({ date, view }) => {
-                                        if (mark.find(x => x === moment(date).format("DD-MM-YYYY"))) {
-                                            return 'highlight'
+                                        const date = moment(e)
+                                        const fixDate = moment(date).format("DD-MM-YYYY")
+                                        const aux = dataContainer.dates.some(x => x.date === moment(e).format("DD-MM-YYYY"))
+                                        if(!aux){
+                                            setDayClick(e)
+                                            dataContainer.dates[dataContainer.dates.length-1].date = fixDate;
+                                            handleDayInputs("date", `${fixDate}`)
                                         }
                                     }}
 
@@ -289,22 +305,36 @@ const ItemPage = () => {
                                 />
                             </div>
                             <div className="_date-ctn">
-                                <input type="text" onChange={(e) => { handleDayInputs("name", e.target.value) }} />
+                                <input type="text" value={dateInputs.name} placeholder="Nombre completo" onChange={(e) => {
+                                    dataContainer.dates[dataContainer.dates.length - 1].name = e.target.value
+                                    handleDayInputs("name", e.target.value)
+                                }} />
                                 {/* <p>{dayClick}</p> */}
-                                <p>{dateInputs.date}</p>
-                                <input type="text" onChange={(e) => { handleDayInputs("name", e.target.value) }} />
+                                <p style={{marginLeft:".5em"}} >{"Fecha: " + dateInputs.date}</p>
+                                <input type="text" value={dateInputs.phone} placeholder="Número de contacto" onChange={(e) => {
+                                    dataContainer.dates[dataContainer.dates.length - 1].phone = e.target.value
+                                    handleDayInputs("phone", e.target.value)
+                                }} />
                                 <TextareaAutosize
-                                    minRows={1}
-                                    maxRows={3}
+                                className="calendar-textarea"
+                                    minRows={3}
+                                    maxRows={5}
                                     placeholder={"Escribe aqui..."}
                                     spellCheck={false}
-                                    onChange={(e) => { handleDayInputs("topic", e.target.value) }}
+                                    value={dateInputs.topic}
+                                    onChange={(e) => {
+                                        dataContainer.dates[dataContainer.dates.length - 1].topic = e.target.value
+                                        handleDayInputs("topic", e.target.value)
+                                    }}
                                 />
                             </div>
                         </div>
                         <div className="_btn-ctn">
-                            <button className="_cancel" onClick={() => { setModal(false) }} >Cancelar</button>
-                            <button className="_accept"  >Aceptar</button>
+                            <button className="_cancel" onClick={() => {
+                                dataContainer.dates.pop()
+                                setModal(false)
+                            }} >Cancelar</button>
+                            <button className="_accept" onClick={setupDate} >Aceptar</button>
                         </div>
                     </div>
                 </div>
@@ -329,9 +359,11 @@ const ItemPage = () => {
                                 <img src={show} alt="" className="big-image" />
                             </div>
                         </div>
-                        <h2 className="_subtitle" >Caracteristicas generales</h2>
+                        <h2 className="_subtitle" onClick={
+                            () => { setDataContainer({ ...dataContainer, dates: [] }) }
+                        } >Caracteristicas generales</h2>
                         <p className="_general-description" >{dataContainer.generaldescription}</p>
-                        <h2 className="_subtitle" id="title-comment" >Comentarios</h2>
+                        <h2 className="_subtitle" id="title-comment" onClick={() => { console.log(dataContainer) }} >Comentarios</h2>
                         <div className="_comment-container">
                             {/* Condicional para verificar que hay un usuario logeado y no un invitado */}
                             {user.id !== "" ?
@@ -358,7 +390,12 @@ const ItemPage = () => {
                             {dataContainer.comments.slice(0).reverse().map((item, index) => {
                                 /// en ¨owner¨ esta la condicional:  Si el usuario logeado es el dueño = True, caso contrario False
                                 /// y asi podemos saber si habilitamos la respuesta del comentario o no
-                                return <Comment key={index} index={index} item={item} owner={user.id === dataContainer.owner ? true : false} />
+                                return <Comment
+                                    key={index} index={index}
+                                    item={item} owner={user.id === dataContainer.owner ? true : false}
+                                    dataContainer={dataContainer} setDataContainer={setDataContainer}
+
+                                />
                             })}
                         </div>
                         <div className="_bannerContainer small-banner " >
@@ -380,10 +417,23 @@ const ItemPage = () => {
                             })}
                         </div>
 
-                        <h2 className="_pay-title" >Metodos de pago</h2>
-                        <img src={pay} alt="" className="_pay-img" />
-                        <button className="_btn" onClick={() => { setModal(true) }} >Comprar</button>
-                        <h2 className="_pay-title" >Busquedas Similares</h2>
+                        {/* <h2 className="_pay-title" >Metodos de pago</h2>
+                        <img src={pay} alt="" className="_pay-img" /> */}
+                        {/* Si el usuario logeado es el dueño, desabilitar el boton */}
+                        {user.id === dataContainer.owner || user.id === "" || !enableDate ? null :<button className="_btn" onClick={() => {
+                            console.log(dataContainer)
+                            dataContainer.dates.push({
+                                name: "",
+                                date: "Seleccione una fecha",
+                                topic: "",
+                                phone: "",
+                                guest: user.id,
+                                owner: dataContainer.owner,
+                                postId: id
+                            })
+                            setModal(true)
+                        }} >Apartar Cita</button>}
+                        <h2 className="_pay-title" >Otras Publicaciones</h2>
                         {/* Columna lateral de publicaciones */}
                         <SliderColum />
                     </aside>

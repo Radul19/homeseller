@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  font-family: Roboto;
+  font-family: Roboto,sans-serif;
   color: #191919;
   position: relative;
 }
@@ -25,6 +25,7 @@ textarea:focus {
 }
 textarea {
   resize: none;
+  font-family: Roboto;
 }
 /*HEADER FLAT */
 
@@ -157,10 +158,18 @@ beige D7C8A2
 .highlight {
   color:#eee;
   /* border-radius: 50%; */
-  background-color: #c4b487;
+  background-color: #65b38d;
 }
 .highlight:hover{
   color:#eee;
   /* border-radius: 50%; */
-  background-color: #ffbd07 ;
+  background-color: #37836b  ;
+}
+
+.disable-day{
+  background-color: #a9a9a9;
+  cursor: default !important;
+}
+.disable-day:hover{
+  background-color: #a9a9a9 !important;
 }

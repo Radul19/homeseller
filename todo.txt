@@ -28,4 +28,8 @@ Nombre de la Persona
 Fecha
 Numero de contacto
 Descripcion de la Cita
-Enlace a la publicacion
+Enlace a la publicacion - ID
+
+Click en el calendario
+Validar Usuario
+
