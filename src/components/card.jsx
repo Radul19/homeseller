@@ -24,7 +24,7 @@ const Card = ({item}) => {
             <div className="_content">
                 <div className="_details">
                     <p className="_price" > { item ? "$" + item.price : "0$"}</p>
-                    <img className="_stars" src={stars} alt="" />
+                    {/* <img className="_stars" src={stars} alt="" /> */}
                 </div>
                 <p className="_description" >{item ? item.title : null}</p>
             </div>

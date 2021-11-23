@@ -18,6 +18,7 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 
 import img1 from "../images/profile-icon.jpg"
+import TextareaAutosize from "react-textarea-autosize"
 
 /// Componente para mostrar cada publicacion perteneciente a la empresa
 const ItemDisplay = ({ item, posts, index, setPosts }) => {
@@ -33,11 +34,13 @@ const ItemDisplay = ({ item, posts, index, setPosts }) => {
 
     /// Al hacer click redirige hacia la publicacion
     const click = () => {
+        setLoad(true)
         loadOut(setFade, setLoad, history, `/itemPage/${item.id}`)
     }
 
     ///Aun en desarrollo
     const clickEdit = () => {
+        setLoad(true)
         loadOut(setFade, setLoad, history, `/itemCreate/${item.id}`)
     }
 
@@ -75,7 +78,7 @@ const ItemDisplay = ({ item, posts, index, setPosts }) => {
                     <p>{item.generaldescription}</p>
                 </div>
                 <div className="_btns-ctn">
-                    <button onClick={clickEdit} >Editar</button>
+                    {/* <button onClick={clickEdit} >Editar</button> */}
                     <button onClick={clickDelete} >Eliminar</button>
                 </div>
             </div>
@@ -324,7 +327,7 @@ const CompanyPage = () => {
                     <div className="_img-div">
                         <div className="_black-div" onClick={profileClick} >
                             {/* Si hay una foto de perfil presentala, si no la hay, presenta la imagen de usuario predeterminada */}
-                            {data.profilepic === "" ?
+                            {data.profilepic === null ?
                                 <img src={img1} alt="" className="_profile-picture" />
                                 : <img src={data.profilepic} alt="" className="_profile-picture" />}
                             {/* Input file fantasma al que se le hace referencia para el click  */}
@@ -344,7 +347,11 @@ const CompanyPage = () => {
                         ) :
                             <>
                                 <input className="_input-edit" placeholder="Nombre de usuario" type="text" onChange={(e) => { handleEdit("name", e.target.value) }} value={data.name} />
-                                <textarea className="_input-edit" placeholder="Descripcion" type="text" onChange={(e) => { handleEdit("description", e.target.value) }} value={data.description} spellCheck={false} cols="30" rows="4" />
+                                <TextareaAutosize 
+                                className="_textarea-edit" placeholder="Descripcion" type="text" onChange={(e) => { handleEdit("description", e.target.value) }} value={data.description} spellCheck={false}
+                                minRows={2}
+                                maxRows={3}
+                                />
                                 <input className="_input-edit" placeholder="Correo" type="text" onChange={(e) => { handleEdit("email", e.target.value) }} value={data.email} />
                             </>
                         }
@@ -374,7 +381,7 @@ const CompanyPage = () => {
                             }) : null}
                     </div>
                     <div className="_right">
-                        <h2 className="_subtitle"  >Otros</h2>
+                        <h2 className="_subtitle"  >Otras Busquedas</h2>
                         {/* Componente para una columna lateral */}
                         <SliderColum />
                     </div>

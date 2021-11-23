@@ -27,12 +27,13 @@ const Header = () => {
     const LogOut = () => {
         return (
             <p className="pointer" onClick={() => {
+                setLoad(true)
+                loadOut(setFade, setLoad, history, "/")
                 setUser({
                     user: "",
                     email: "",
                     id: "",
                 })
-                loadOut(setFade, setLoad, history, "/")
             }} >Cerrar Sesión</p>
         )
     }
@@ -56,13 +57,19 @@ const Header = () => {
     return (
         /// El logo redirige a la SearchPage
         <header className="headerFlat" >
-            <img src={miniLogo} alt="" className="_logo" onClick={() => { loadOut(setFade, setLoad, history, "/search") }} />
+            <img src={miniLogo} alt="" className="_logo" onClick={() => { 
+                setLoad(true)
+                loadOut(setFade, setLoad, history, "/search") }} />
             {/* Searchbar */}
             <input type="text" className="_input" placeholder="Buscar..." value={input} onChange={(e) => { setInput(e.target.value) }} onKeyDown={handleEnter} spellCheck={false} />
             <div className="_links">
-                <p className="pointer" onClick={() => { loadOut(setFade, setLoad, history, "/explore/ ") }}>Destacados</p>
+                <p className="pointer" onClick={() => { 
+                    setLoad(true)
+                    loadOut(setFade, setLoad, history, "/explore/ ") }}>Destacados</p>
                 {/* Esta logica esta explicada en el Header de SearchPage */}
-                {user.id !== "" ? <p className="pointer" onClick={() => { loadOut(setFade, setLoad, history, `${perfil + user.id}`) }} >Perfil</p> : null}
+                {user.id !== "" ? <p className="pointer" onClick={() => { 
+                    setLoad(true)
+                    loadOut(setFade, setLoad, history, `${perfil + user.id}`) }} >Perfil</p> : null}
                 {user.id !== "" ? <LogOut /> : <LogIn />}
             </div>
         </header >

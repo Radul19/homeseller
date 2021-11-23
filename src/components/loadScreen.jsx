@@ -24,21 +24,21 @@ export const loadOut = (setFade, setLoad, history, direction) => {
     if (history === undefined && direction === undefined) {
         setTimeout(() => {
             setFade("out")
-        }, 200);
+        }, 500);
         setTimeout(() => {
             setLoad(false)
             setFade("in")
-        }, 700);
+        }, 1000);
 
     } else {
         setTimeout(() => {
             history.push(direction)
             setFade("out")
-        }, 200);
+        }, 500);
         setTimeout(() => {
             setLoad(false)
             setFade("in")
-        }, 700);
+        }, 1000);
     }
 }
 

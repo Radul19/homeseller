@@ -1,8 +1,8 @@
 const axios = require("axios").default
 
 //Aqui se alterna entre el local host y la url en heroku del servidor
-// const url = "http://localhost:4000/"
-const url = "https://home-seller-back.herokuapp.com/"
+const url = "http://localhost:4000/"
+// const url = "https://home-seller-back.herokuapp.com/"
 
 
 /// Funcion general para el catch error que se usa en TODAS las peticiones 

@@ -399,7 +399,7 @@ const ItemPage = () => {
                             })}
                         </div>
                         <div className="_bannerContainer small-banner " >
-                            <p className="_text" >Disfruta de nuestro amplio catálogo desde cualquier dispositivo </p>
+                            <p className="_text" >Proximamente Homeseller para dispositivos móviles.</p>
                             <img src={Banner} alt="" className="banner" />
                         </div>
                     </div>

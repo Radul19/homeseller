@@ -177,9 +177,9 @@ const MainPage = () => {
                     <label htmlFor="Username">Email</label>
                     <input className="_input" autoComplete="off" onChange={(e) => {handleRegister("email", e.target.value)}} type="text" name="email" />
                     <label htmlFor="Password"  >Contraseña</label>
-                    <input className="_input" autoComplete="off" onChange={(e) => {handleRegister("password", e.target.value)}} type="text" name="password" />
+                    <input className="_input" autoComplete="off" onChange={(e) => {handleRegister("password", e.target.value)}} type="password" name="password" />
                     <label htmlFor="Password"  >Confirmar contraseña</label>
-                    <input className="_input" autoComplete="off" onChange={(e) => {handleRegister("confirmPassword", e.target.value)}} type="text" name="password" />
+                    <input className="_input" autoComplete="off" onChange={(e) => {handleRegister("confirmPassword", e.target.value)}} type="password" name="password" />
                     {/* Boton con la funcion para enviar los datos */}
                     <button type="button" onClick={handleRegisterReturn} >Crear cuenta</button>
                 </form>

@@ -13,7 +13,7 @@ import backImage from "../images/searchBackImage.png"
 
 
 /// Componente Log Out para el header
-const LogOut = ({history}) => {
+const LogOut = ({ history }) => {
     /// Extrae el contenido de UserContext 
     const { setUser, setFade, setLoad } = useContext(UserContext)
     return (
@@ -24,17 +24,22 @@ const LogOut = ({history}) => {
                 email: "",
                 id: "",
             })
+            setLoad(true)
             loadOut(setFade, setLoad, history, "/")
         }} >Cerrar Sesión</p>
-        )
-    }
-    
-    /// Componente Log In para el header
-    const LogIn = ({history}) => {
+    )
+}
+
+/// Componente Log In para el header
+const LogIn = ({ history }) => {
     /// Regresa a la pantalla de inicio
     const { setFade, setLoad } = useContext(UserContext)
+
     return (
-        <p className="pointer" onClick={() => { loadOut(setFade, setLoad, history, "/") }} >Iniciar Sesion</p>
+        <p className="pointer" onClick={() => {
+            setLoad(true)
+            loadOut(setFade, setLoad, history, "/")
+        }} >Iniciar Sesion</p>
     )
 }
 
@@ -92,9 +97,13 @@ const SearchPage = () => {
                         <img src={miniLogo} alt="" className="_logo" />
                         <div className="_links">
                             {/* Redirigir a Explore Page */}
-                            <p className="pointer" onClick={() => { loadOut(setFade, setLoad, history, "/explore/ ") }}>Destacados</p>
+                            <p className="pointer" onClick={() => { 
+                                setLoad(true)
+                                loadOut(setFade, setLoad, history, "/explore/ ") }}>Destacados</p>
                             {/* Si hay un usuario logeado permite cargar el componente que redirige al perfil, caso contrario, retorna nulo */}
-                            {user.id !== "" ? <p className="pointer" onClick={() => { loadOut(setFade, setLoad, history, `${perfil + user.id}`) }} >Perfil</p> : null}
+                            {user.id !== "" ? <p className="pointer" onClick={() => { 
+                                setLoad(true)
+                                loadOut(setFade, setLoad, history, `${perfil + user.id}`) }} >Perfil</p> : null}
                             {/* Si hay un usuario logeado retorna el LogOut para cerrar sesion, caso contrario el Login para ir a la pagina de inicio */}
                             {user.id !== "" ? <LogOut history={history} /> : <LogIn history={history} />}
                         </div>
@@ -112,7 +121,7 @@ const SearchPage = () => {
                 {/* <SliderBar /> */}
                 <SliderBar data={data} SPV={5} width="90%" />
                 <div className="_bannerContainer" >
-                    <p className="_text" >Disfruta de nuestro amplio catálogo desde cualquier dispositivo </p>
+                    <p className="_text" >Proximamente Homeseller disponible para dispositivos móviles.</p>
                     <img src={Banner} alt="" className="banner" />
                 </div>
                 {/* <SliderBar /> */}
