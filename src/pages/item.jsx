@@ -13,6 +13,14 @@ import TextareaAutosize from "react-textarea-autosize";
 import Banner from "../images/Banner1.png"
 import pay from "../images/pay.png"
 
+import moment from "moment"
+
+import DayPicker from 'react-day-picker';
+import 'react-day-picker/lib/style.css';
+
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
+
 
 //////   ITEM PAGE ////////////////////////////////////////////////////////
 const ItemPage = () => {
@@ -95,7 +103,7 @@ const ItemPage = () => {
 
         return (
             <>
-            {/* Presenta el nombre de usuario y el texto de el comentario */}
+                {/* Presenta el nombre de usuario y el texto de el comentario */}
                 <div className="comment-display" >
                     <p className="_date" >{username}</p>
                     <p className="_comment">{item.text}</p>
@@ -130,7 +138,7 @@ const ItemPage = () => {
             </>
         )
     }
-
+    /////// ESTADOS ////////////////////////////////////////////////////////////////////
     /// Estado para la informacion general de la publicacion
     const [dataContainer, setDataContainer] = useState({
         title: "a",
@@ -155,7 +163,32 @@ const ItemPage = () => {
     /// Si es un usuario normal, puede comentar la publicacion
     const [commentInput, setCommentInput] = useState("")
 
-    
+    /// Estado para el modal
+    const [modal, setModal] = useState(false)
+
+    /// Estado para seleccionar dias en el calendario
+    const [dayClick, setDayClick] = useState(null)
+    const past = {
+        before: new Date(2021, 11, 16),
+    }
+    const pastStyle = `.DayPicker-Day--past{
+        background-color: orange;
+        color: white;
+      }`;
+    /// Estado para los datos de la cita
+    const [dateInputs, setDateInputs] = useState({
+        name: "",
+        date: "Seleccione una fecha",
+        topic: "",
+        phone: ""
+    })
+    const handleDayInputs = (name, value) => { setDateInputs({ ...dateInputs, [name]: value }) }
+    const mark = [
+        '04-11-2021',
+        '03-11-2021',
+        '05-11-2021'
+    ]
+
     // Una vez cargado el componente, busca los datos de la publicacion por el id de la url
     useEffect(() => {
         (async () => {
@@ -170,7 +203,7 @@ const ItemPage = () => {
                 handleError(res)
             }
         })()
-        return () =>{
+        return () => {
             // Cada vez que la pagina se renderice, aplica un +1 a las vistas
             api.plusView(id)
         }
@@ -206,6 +239,76 @@ const ItemPage = () => {
 
     return (
         <div className="itemPage">
+            {modal ?
+                <div className="blackScreen2">
+                    <div className="_modal">
+                        <h3>Seleccione una fecha</h3>
+                        {/* <div className="_img-ctn">
+                            <div className={newItemType === 1 ? "_selected" : null} onClick={() => { setNewItemType(1) }}  >
+                                <img src={Grp1} alt="" />
+                                <p>Tradicional</p>
+                            </div>
+                            <div className={newItemType === 2 ? "_selected" : null} onClick={() => { setNewItemType(2) }} >
+                                <img src={Grp2} alt="" />
+                                <p>Modo cine</p>
+                            </div>
+                            <div className={newItemType === 3 ? "_selected" : null} onClick={() => { setNewItemType(3) }} >
+                                <img src={Grp3} alt="" />
+                                <p>Ventanas Modale</p>
+                            </div>
+                        </div> */}
+                        <div className="_info-ctn">
+                            <div className="_calendar-div">
+                                {/* <DayPicker
+                                    style={ pastStyle}
+                                    modifiers={past}
+                                    modifiersStyles={pastStyle}
+                                    selectedDays={dayClick}
+                                    onDayClick={(day, { selected }) => {
+                                        if (selected) {
+                                            setDayClick(undefined)
+                                            return
+                                        }
+                                        setDayClick(day)
+                                    }}
+                                /> */}
+                                <Calendar
+                                minDate={new Date(Date.now())}
+                                    onChange={(e) => {
+                                        console.log(e)
+                                        setDayClick(e)
+                                        handleDayInputs("date", `${e}`)
+                                    }}
+                                    tileClassName={({ date, view }) => {
+                                        if (mark.find(x => x === moment(date).format("DD-MM-YYYY"))) {
+                                            return 'highlight'
+                                        }
+                                    }}
+
+                                    value={dayClick}
+                                />
+                            </div>
+                            <div className="_date-ctn">
+                                <input type="text" onChange={(e) => { handleDayInputs("name", e.target.value) }} />
+                                {/* <p>{dayClick}</p> */}
+                                <p>{dateInputs.date}</p>
+                                <input type="text" onChange={(e) => { handleDayInputs("name", e.target.value) }} />
+                                <TextareaAutosize
+                                    minRows={1}
+                                    maxRows={3}
+                                    placeholder={"Escribe aqui..."}
+                                    spellCheck={false}
+                                    onChange={(e) => { handleDayInputs("topic", e.target.value) }}
+                                />
+                            </div>
+                        </div>
+                        <div className="_btn-ctn">
+                            <button className="_cancel" onClick={() => { setModal(false) }} >Cancelar</button>
+                            <button className="_accept"  >Aceptar</button>
+                        </div>
+                    </div>
+                </div>
+                : null}
             <Header />
             <main className="_general-div">
                 <div className="_title-div">
@@ -234,7 +337,7 @@ const ItemPage = () => {
                             {user.id !== "" ?
                                 /// Condicional para saber si el usuario logeado es el dueño de la publicacion
                                 user.id === dataContainer.owner ? null :
-                                /// Si el usuario logeado no es el dueño, muestra un TextareaAutosize para escribir un comentario
+                                    /// Si el usuario logeado no es el dueño, muestra un TextareaAutosize para escribir un comentario
                                     <div className="_textarea-ctn">
                                         <TextareaAutosize
                                             minRows={1}
@@ -279,14 +382,14 @@ const ItemPage = () => {
 
                         <h2 className="_pay-title" >Metodos de pago</h2>
                         <img src={pay} alt="" className="_pay-img" />
-                        <button className="_btn" >Comprar</button>
+                        <button className="_btn" onClick={() => { setModal(true) }} >Comprar</button>
                         <h2 className="_pay-title" >Busquedas Similares</h2>
                         {/* Columna lateral de publicaciones */}
                         <SliderColum />
                     </aside>
                 </div>
             </main>
-            <Footer/>
+            <Footer />
         </div>
     )
 }

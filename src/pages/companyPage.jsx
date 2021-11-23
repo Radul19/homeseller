@@ -14,9 +14,6 @@ import 'react-day-picker/lib/style.css';
 
 
 import img1 from "../images/profile-icon.jpg"
-import Grp1 from "../images/Group 1.png"
-import Grp2 from "../images/Group 2.png"
-import Grp3 from "../images/Group 3.png"
 
 /// Componente para mostrar cada publicacion perteneciente a la empresa
 const ItemDisplay = ({ item, posts, index, setPosts }) => {
@@ -99,7 +96,7 @@ const CompanyPage = () => {
     ///Estado para habilitar la edicion de los datos
     const [edit, setEdit] = useState(false)
     /// Almacenar en una variable que tipo de display va a tener la publicacion que se va a crear
-    const [newItemType, setNewItemType] = useState(0)
+    // const [newItemType, setNewItemType] = useState(0)
     /// Estado para alternar la ventana modal en la que se selecciona el display del item a crear
     const [createItem, setCreateItem] = useState(false)
     /// Todos los datos de la compañia
@@ -160,21 +157,21 @@ const CompanyPage = () => {
 
     /// Una vez seleccionado y aceptado el tipo de display que tendra la nueva publicacion
     /// se enviará a la pagina que corresponda
-    const goCreateItem = () => {
-        switch (newItemType) {
-            case 1:
-                loadOut(setFade, setLoad, history, "/itemCreate/new")
-                break;
-            case 2:
-                loadOut(setFade, setLoad, history, "/itemPage2/new")
-                break;
-            case 3:
-                loadOut(setFade, setLoad, history, "/itemPage3/new")
-                break;
-            default:
-                break;
-        }
-    }
+    // const goCreateItem = () => {
+    //     switch (newItemType) {
+    //         case 1:
+    //             loadOut(setFade, setLoad, history, "/itemCreate/new")
+    //             break;
+    //         case 2:
+    //             loadOut(setFade, setLoad, history, "/itemPage2/new")
+    //             break;
+    //         case 3:
+    //             loadOut(setFade, setLoad, history, "/itemPage3/new")
+    //             break;
+    //         default:
+    //             break;
+    //     }
+    // }
     ///UseRef para referir el inputFile de la imagen de perfil
     const inputFile = useRef(null)
 
@@ -240,7 +237,7 @@ const CompanyPage = () => {
                         </div>
                         <div className="_btn-ctn">
                             <button className="_cancel" onClick={() => { setCreateItem(false) }} >Cancelar</button>
-                            <button className="_accept" onClick={goCreateItem} >Aceptar</button>
+                            <button className="_accept" onClick={()=>{loadOut(setFade, setLoad, history, `/itemCreate/new`)}} >Aceptar</button>
                         </div>
                     </div>
                 </div>
