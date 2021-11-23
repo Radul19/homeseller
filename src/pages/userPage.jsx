@@ -116,10 +116,10 @@ const UserPage = () => {
                                 }} >&#10006; Cancelar</p> : null}
                             </div>
                         </div>
-                        {/* <h2 style={{ color: "#000" }}  >Title</h2> */}
+                        <h2 style={{ color: "#000" }}  >Otras publicaciones</h2>
                         {/* Sliders sin motivo aun */}
-                        {/* <SliderBar data={data} SPV={4} />
-                        <SliderBar data={data} SPV={4} /> */}
+                        <SliderBar data={data} SPV={4} />
+                        {/* <SliderBar data={data} SPV={4} /> */}
                     </div>
                     <aside className="_right-content">
                         <h2 className="_subtitle" >Busquedas Relacionadas</h2>

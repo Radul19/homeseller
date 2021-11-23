@@ -27,7 +27,7 @@ const Filter = ({ name, data, setSort, sort, setCopy }) => {
             /// Si el estado "sort" no es igual al nombre actual de el filtro cliqueado
             /// Ejecuta las funciones de filtro segun el nombre
             if (name === "Precio") price(arr)
-            if (name === "Recientes") title(arr)
+            if (name === "Nombre") title(arr)
             if (name === "Mas visitados") views(arr)
             setSort(name)
         }

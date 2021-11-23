@@ -63,6 +63,7 @@ const SearchPage = () => {
     /// La busqueda se realiza en explorePage
     const handleEnter = (e) => {
         if (e.key === "Enter") {
+            setLoad(true)
             loadOut(setFade, setLoad, history, `/explore/${input}`)
         }
     }

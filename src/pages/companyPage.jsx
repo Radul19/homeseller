@@ -314,6 +314,7 @@ const CompanyPage = () => {
                             <button
                                 className="_accept"
                                 onClick={() => {
+                                    setLoad(true)
                                     loadOut(setFade, setLoad, history, `/itemPage/${selectedDate.postId}`)
                                 }} >Ver Publicacion</button>
                         </div>

@@ -111,7 +111,7 @@ const Comment = ({ item, index, dataContainer, setDataContainer }) => {
                     : null
                 ///////////// En caso de existir una respuesta, presentala
                 : <div className="reply-display" >
-                    <p className="_date" >{`${item.reply_date}`}</p>
+                    <p className="_date" > </p>
                     <p className="_comment">{item.reply}</p>
                 </div>}
         </>
