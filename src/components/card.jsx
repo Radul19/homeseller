@@ -14,6 +14,7 @@ const Card = ({item}) => {
 
     /// Funcion para redirigirnos a la pagina del item al hacer click en el
     const sendToItem =()=>{
+        setLoad(true)
         loadOut(setFade,setLoad,history,`/itemPage/${item.id}`)
     }
 
